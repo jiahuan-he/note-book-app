@@ -18,6 +18,7 @@ class Editor extends React.Component {
         return (
             <div>
                 <ReactQuill
+                    style = { {height: '500px'}}
                     value={this.state.text}
                     modules = {{
                         toolbar: [
