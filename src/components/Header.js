@@ -10,15 +10,12 @@ import {
 
 class Header extends React.Component{
 
-
-
     render() {
         return (
             <Menu inverted fixed='top' size='large'>
                 <Container>
                     <Menu.Item as='a' active>Home</Menu.Item>
                     <Menu.Item as='a'>Work</Menu.Item>
-                    <Menu.Item as='a'>Company</Menu.Item>
                     <Menu.Item as='a'>Careers</Menu.Item>
                     <Menu.Menu position='right'>
                         <Menu.Item className='item'>
