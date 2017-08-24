@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card , Button} from 'semantic-ui-react'
 
-const NotebookItem = ({title, createDate, onClick, onDeleteButtonClicked})=> {
+const NotebookItem = ({title, createDate, onClick, onDeleteButtonClicked, onEditButtonClicked})=> {
 
     return (
         <div>
@@ -16,7 +16,7 @@ const NotebookItem = ({title, createDate, onClick, onDeleteButtonClicked})=> {
                         </Card.Meta>
                     </div>
                     <div className='ui two buttons'>
-                        <Button basic color='green'>Edit</Button>
+                        <Button onClick={onEditButtonClicked} basic color='green'>Edit</Button>
                         <Button onClick={onDeleteButtonClicked} basic color='red'>Delete</Button>
                     </div>
                 </Card.Content>

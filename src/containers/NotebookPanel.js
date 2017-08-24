@@ -5,7 +5,12 @@ import { Grid, List,Button, Modal, Input} from 'semantic-ui-react'
 import {ButtonTop} from './PanelComponents'
 import {TYPE_ITEM} from '../util/constants';
 import { connect } from 'react-redux'
-import {deleteNotebookAction, addNotebookAction, selectNotebookAction} from '../actions/actionCreators';
+import {
+    editNotebookAction,
+    deleteNotebookAction,
+    addNotebookAction,
+    selectNotebookAction} from '../actions/actionCreators';
+import {ACTION} from "../util/constants";
 
 class NotebookPanel extends React.Component{
 
@@ -13,7 +18,8 @@ class NotebookPanel extends React.Component{
         super(props);
         this.state = {
             modalOpen: false,
-            inputValue: ''
+            inputValue: '',
+            editingNotebookId: null,
         };
     }
 
@@ -21,18 +27,39 @@ class NotebookPanel extends React.Component{
         this.setState({modalOpen: true});
     };
 
+    editingNotebookId;
     handleDone = ()=>{
-        this.props.addNotebook(this.state.inputValue);
-        this.setState({modalOpen: false})
+        const actionType = this.state.editingNotebookId ? ACTION.NOTEBOOK_EDIT : ACTION.NOTEBOOK_ADD;
+
+        switch (actionType){
+            case ACTION.NOTEBOOK_ADD:
+                this.props.addNotebook(this.state.inputValue);
+                break;
+            case ACTION.NOTEBOOK_EDIT:
+                const data = { title: this.state.inputValue};
+                this.props.editNotebook(this.state.editingNotebookId, data);
+                this.setState({editingNotebookId : null});
+                break;
+            default:
+                console.log( " ERROR! in NotebookPanel.js, handleDone, NOTEBOOK EDIT" );
+                break;
+        }
+        this.setState( {modalOpen: false, inputValue: ''});
     };
 
     handleCancel = ()=> {
+        this.setState( {inputValue: ''});
         this.setState({modalOpen: false})
+    };
+
+    openEditModal = (editingNotebook)=> {
+        this.setState({inputValue: editingNotebook.title, modalOpen: true});
+        this.setState ({editingNotebookId: editingNotebook.notebookId});
     };
 
     render(){
 
-        const type = TYPE_ITEM.NOTEBOOK;
+        const itemType = TYPE_ITEM.NOTEBOOK;
         const notebooks = this.props.notebooks.map( (notebook)=>{
             const id = notebook.notebookId;
             const title = notebook.title;
@@ -40,26 +67,30 @@ class NotebookPanel extends React.Component{
             return (<NotebookItem
                 onClick = {()=> this.props.selectNotebook(id)}
                 onDeleteButtonClicked = {() => this.props.deleteNotebook(id)}
+                onEditButtonClicked = {() => this.openEditModal(notebook)}
                 key={id}
                 title= {title}
                 createDate= {createDate} />)
         }
-
         );
 
         return (
             <Grid.Column width={this.props.width}>
-                <ButtonTop  type={type} onClick={this.openModal} />
+                <ButtonTop  type={itemType} onClick={this.openModal} />
                 <Modal open={this.state.modalOpen}>
-                    <Modal.Header>{type} TITLE</Modal.Header>
+                    <Modal.Header>{itemType} TITLE</Modal.Header>
                     <Modal.Content >
                         <Modal.Description>
                             <Input onChange={e => this.setState({inputValue: e.target.value}) }
                                    fluid
-                                   placeholder='Title'/>
+                                   placeholder='Title'
+                                   defaultValue = {this.state.inputValue}
+                            />
                             <Button onClick={ this.handleCancel }>Cancel</Button>
                             <Button disabled={ this.state.inputValue.trim().length === 0 }
-                                    onClick={ this.handleDone } primary>Done</Button>
+                                    onClick={ () => {
+                                        this.handleDone()
+                                    }} primary>Done</Button>
                         </Modal.Description>
                     </Modal.Content>
                 </Modal>
@@ -82,6 +113,10 @@ const mapDispatchToProps = dispatch => {
         deleteNotebook: (id) => {
             dispatch(deleteNotebookAction(id));
         },
+        editNotebook: (editingNotebookId, data) => {
+            dispatch(editNotebookAction(editingNotebookId, data));
+        }
+
     }
 };
 
