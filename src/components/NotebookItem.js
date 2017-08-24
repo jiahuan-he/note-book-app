@@ -1,11 +1,10 @@
 import React from 'react';
 import { Card } from 'semantic-ui-react'
 
-const NotebookItem = ({title, createDate})=> {
+const NotebookItem = ({title, createDate, onClick})=> {
 
     return (
-
-        <Card href='#'>
+        <Card onClick={onClick} href='#'>
             <Card.Content>
                 <Card.Header>{title}</Card.Header>
                 <Card.Meta>{createDate+ " "}

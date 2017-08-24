@@ -1,6 +1,15 @@
 import {ACTION} from '../constants/type';
-export const addNotebookAction = ()=>{
-    return {type: ACTION.NOTEBOOK_ADD};
+import {currentDateToString} from '../util/util';
+
+export const addNotebookAction = (title)=>{
+    return { type: ACTION.NOTEBOOK_ADD,
+        payload:
+            {
+                title: title,
+                createDate : 'today',
+                id: currentDateToString()
+            }
+    }
 };
 
 export const addPageAction = (title)=> {
@@ -11,5 +20,12 @@ export const addPageAction = (title)=> {
                      createDate : 'today',
                      editor: null
                  }
+    }
+};
+
+export const selectNotebookAction = (id)=> {
+    return {
+        type: ACTION.NOTEBOOK_SELECT,
+        payload: {id: id},
     }
 };

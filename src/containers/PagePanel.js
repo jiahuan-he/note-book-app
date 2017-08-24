@@ -25,14 +25,15 @@ class PagePanel extends React.Component{
     }
 
     openModal = ()=>{
-        console.log(this.state);
         this.setState({modalOpen: true});
-        console.log(this.state)
     };
 
     handleDone = ()=>{
-
         this.props.addPage(this.state.inputValue);
+        this.setState({modalOpen: false})
+    };
+
+    handleCancel = ()=> {
         this.setState({modalOpen: false})
     };
 
@@ -50,14 +51,12 @@ class PagePanel extends React.Component{
                     <Modal.Header>{type} TITLE</Modal.Header>
                     <Modal.Content >
                         <Modal.Description>
-                            <Input
-                                    onChange={e => this.setState({inputValue: e.target.value}) }
+                            <Input onChange={e => this.setState({inputValue: e.target.value}) }
                                    fluid
                                    placeholder='Title'/>
-                            <Button onClick={ this.handleDone }>Cancel</Button>
-                            <Button
-                                disabled={ this.state.inputValue.trim().length === 0 }
-                                onClick={ this.handleDone } primary>Done</Button>
+                            <Button onClick={ this.handleCancel }>Cancel</Button>
+                            <Button disabled={ this.state.inputValue.trim().length === 0 }
+                                    onClick={ this.handleDone } primary>Done</Button>
                         </Modal.Description>
                     </Modal.Content>
                 </Modal>
