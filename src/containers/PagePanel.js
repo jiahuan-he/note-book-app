@@ -20,6 +20,7 @@ class PagePanel extends React.Component{
         super(props);
         this.state = {
             modalOpen: false,
+            inputValue: ''
         };
     }
 
@@ -29,40 +30,34 @@ class PagePanel extends React.Component{
         console.log(this.state)
     };
 
-    inputValue = '';
     handleDone = ()=>{
 
-        this.props.addPage(this.inputValue);
+        this.props.addPage(this.state.inputValue);
         this.setState({modalOpen: false})
-    };
-
-    getPageList = () => {
-
-        this.props.pages.map( (page)=> {
-            return (<PageItem title= {page.title} createDate= {page.createDate} />)
-        })
     };
 
     render(){
 
         const type = TYPE_ITEM.PAGE;
         const pages = this.props.pages.map( (page)=>
-                        (<PageItem title= {page.title} createDate= {page.createDate} />)
+                        (<PageItem key={page.id} title= {page.title} createDate= {page.createDate} />)
         );
+
         return (
             <Grid.Column width={this.props.width}>
-                <ButtonTop type={type} onClick={this.openModal} />
+                <ButtonTop  type={type} onClick={this.openModal} />
                 <Modal open={this.state.modalOpen}>
                     <Modal.Header>{type} TITLE</Modal.Header>
                     <Modal.Content >
                         <Modal.Description>
                             <Input
-                                    onChange={e => this.inputValue = e.target.value}
+                                    onChange={e => this.setState({inputValue: e.target.value}) }
                                    fluid
-                                   defaultValue='Untitled'
                                    placeholder='Title'/>
                             <Button onClick={ this.handleDone }>Cancel</Button>
-                            <Button onClick={ this.handleDone } primary>Done</Button>
+                            <Button
+                                disabled={ this.state.inputValue.trim().length === 0 }
+                                onClick={ this.handleDone } primary>Done</Button>
                         </Modal.Description>
                     </Modal.Content>
                 </Modal>
