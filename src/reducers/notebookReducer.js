@@ -5,6 +5,9 @@ export const notebooks = (state = [], action) => {
     switch (action.type){
         case ACTION.NOTEBOOK_ADD:
             return [...state, action.payload];
+
+        case ACTION.NOTEBOOK_DELETE:
+            return state.filter( (notebook)=> notebook.notebookId !== action.payload.notebookId);
         default:
             return state;
     }

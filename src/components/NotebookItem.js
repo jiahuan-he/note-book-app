@@ -1,17 +1,29 @@
 import React from 'react';
-import { Card } from 'semantic-ui-react'
+import { Card , Button} from 'semantic-ui-react'
 
-const NotebookItem = ({title, createDate, onClick})=> {
+const NotebookItem = ({title, createDate, onClick, onDeleteButtonClicked})=> {
 
     return (
-        <Card onClick={onClick} href='#'>
-            <Card.Content>
-                <Card.Header>{title}</Card.Header>
-                <Card.Meta>{createDate+ " "}
-                     Pages: 6
-                </Card.Meta>
-            </Card.Content>
-        </Card>
+        <div>
+            <Card  >
+                <Card.Content>
+                    <div onClick={onClick}>
+                        <Card.Header>
+                            {title}
+                        </Card.Header>
+                        <Card.Meta>{createDate+ " "}
+                            Pages: 6
+                        </Card.Meta>
+                    </div>
+                    <div className='ui two buttons'>
+                        <Button basic color='green'>Edit</Button>
+                        <Button onClick={onDeleteButtonClicked} basic color='red'>Delete</Button>
+                    </div>
+                </Card.Content>
+            </Card>
+        </div>
+
+
     )
 
 };

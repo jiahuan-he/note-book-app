@@ -5,7 +5,7 @@ import { Grid, List,Button, Modal, Input} from 'semantic-ui-react'
 import {ButtonTop} from './PanelComponents'
 import {TYPE_ITEM} from '../util/constants';
 import { connect } from 'react-redux'
-import {addNotebookAction, selectNotebookAction} from '../actions/actionCreators';
+import {deleteNotebookAction, addNotebookAction, selectNotebookAction} from '../actions/actionCreators';
 
 class NotebookPanel extends React.Component{
 
@@ -38,8 +38,8 @@ class NotebookPanel extends React.Component{
             const title = notebook.title;
             const createDate = notebook.createDate;
             return (<NotebookItem
-                onClick = {()=> {this.props.selectNotebook(id);}
-                }
+                onClick = {()=> this.props.selectNotebook(id)}
+                onDeleteButtonClicked = {() => this.props.deleteNotebook(id)}
                 key={id}
                 title= {title}
                 createDate= {createDate} />)
@@ -78,14 +78,16 @@ const mapDispatchToProps = dispatch => {
         },
         selectNotebook: (id) => {
             dispatch(selectNotebookAction(id));
-        }
+        },
+        deleteNotebook: (id) => {
+            dispatch(deleteNotebookAction(id));
+        },
     }
 };
 
 const mapStateToProps = ( state ) => {
     return {
         notebooks: state.notebooks,
-
         //TODO change current notebook's appearance
         currentNotebookId: state.currentNotebookId,
     };

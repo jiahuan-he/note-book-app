@@ -4,6 +4,7 @@ import { Card} from 'semantic-ui-react'
 const PageItem = ({title, createDate})=> {
 
     return (
+
             <Card href='#'>
                 <Card.Content>
                     <Card.Header>{title}</Card.Header>
@@ -13,6 +14,9 @@ const PageItem = ({title, createDate})=> {
                     <Card.Description>Daniel is a comedian living in Nashville.</Card.Description>
                 </Card.Content>
             </Card>
+
+
+
     )
 
 };

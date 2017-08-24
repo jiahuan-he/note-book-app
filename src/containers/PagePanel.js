@@ -9,7 +9,6 @@ import {addPageAction} from '../actions/actionCreators';
 class PagePanel extends React.Component{
 
     //TODO
-    // Title
     // Create date
     // Delete
 

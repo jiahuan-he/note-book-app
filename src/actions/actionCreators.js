@@ -31,3 +31,10 @@ export const selectNotebookAction = (id)=> {
         payload: {notebookId: id},
     }
 };
+
+export const deleteNotebookAction = (id)=> {
+    return {
+        type: ACTION.NOTEBOOK_DELETE,
+        payload: {notebookId: id},
+    }
+}
