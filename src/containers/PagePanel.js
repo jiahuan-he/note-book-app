@@ -1,6 +1,6 @@
 import React from 'react';
 import PageItem from '../components/PageItem'
-import { Grid, List,Button, Modal, Input} from 'semantic-ui-react'
+import { Grid, List,Button, Modal, Input, Header} from 'semantic-ui-react'
 import {ButtonTop} from './PanelComponents'
 import {TYPE_ITEM} from '../util/constants';
 import { connect } from 'react-redux'
@@ -44,9 +44,16 @@ class PagePanel extends React.Component{
                         (<PageItem key={page.id} title= {page.title} createDate= {page.createDate} />)
         );
 
+        let parentNotebookTitle;
+        if( this.props.currentNotebook){
+            parentNotebookTitle = this.props.currentNotebook.title;
+        }
+
+
         return (
             <Grid.Column width={this.props.width}>
                 <ButtonTop  type={type} onClick={this.openModal} />
+                <Header size='large'>{parentNotebookTitle}</Header>
                 <Modal open={this.state.modalOpen}>
                     <Modal.Header>{type} TITLE</Modal.Header>
                     <Modal.Content >
@@ -76,9 +83,18 @@ const mapDispatchToProps = dispatch => {
     }
 };
 
+const getCurrentNotebook = (id, notebooks) => {
+    let currentNotebook = notebooks.filter( (notebook)=> {
+            return notebook.id === id
+        }
+    );
+    return currentNotebook[0];
+};
+
 const mapStateToProps = ( state ) => {
     return {
-        pages: state.pages
+        pages: state.pages,
+        currentNotebook: getCurrentNotebook(state.currentNotebookId, state.notebooks),
     };
 };
 

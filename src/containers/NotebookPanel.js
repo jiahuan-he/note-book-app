@@ -38,7 +38,8 @@ class NotebookPanel extends React.Component{
             const title = notebook.title;
             const createDate = notebook.createDate;
             return (<NotebookItem
-                onClick = { (notebook)=> this.props.selectNotebook(id)}
+                onClick = {()=> {this.props.selectNotebook(id);}
+                }
                 key={id}
                 title= {title}
                 createDate= {createDate} />)
@@ -83,7 +84,10 @@ const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = ( state ) => {
     return {
-        notebooks: state.notebooks
+        notebooks: state.notebooks,
+
+        //TODO change current notebook's appearance
+        currentNotebookId: state.currentNotebookId,
     };
 };
 
