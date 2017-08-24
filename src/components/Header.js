@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import {addNotebook} from "../actions/action";
+import {addNotebookAction} from "../actions/actionCreators";
 
 import {
     Button,
@@ -34,7 +34,7 @@ class Header extends React.Component{
 const mapDispatchToProps = dispatch => {
     return {
         onAddButtonClick: () => {
-            dispatch(addNotebook());
+            dispatch(addNotebookAction());
         }
     }
 };

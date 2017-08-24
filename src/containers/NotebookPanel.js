@@ -1,10 +1,9 @@
 import React from 'react';
 import NotebookItem from '../components/NotebookItem'
-import {  Grid, List, Transition, Input, } from 'semantic-ui-react'
+import {  Grid, List, Transition,} from 'semantic-ui-react'
 import NotebookPanelHeader from './NotebookPanelHeader';
 
 class NotebookPanel extends React.Component{
-
 
     state = {
         notebooks: [
@@ -19,7 +18,6 @@ class NotebookPanel extends React.Component{
             );
         console.log("handleAdd");
     };
-
 
     //TODO
     // Title

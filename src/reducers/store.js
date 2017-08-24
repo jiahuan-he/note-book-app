@@ -1,10 +1,14 @@
 import { combineReducers,applyMiddleware } from 'redux'
 import { createStore } from 'redux'
-import notebookReducer from "./notebookReducer";
+import { pageReducer} from "./notebookReducer";
 import logger from 'redux-logger'
 
-const reducer = combineReducers({notebookReducer});
 
-const store = createStore( reducer, applyMiddleware(logger));
+
+
+// const reducer = combineReducers({notebookReducer, pageReducer});
+
+const store = createStore( pageReducer, applyMiddleware(logger));
+console.log(store.getState());
 
 export default store;
