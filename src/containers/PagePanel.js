@@ -29,7 +29,7 @@ class PagePanel extends React.Component{
     };
 
     handleDone = ()=>{
-        this.props.addPage(this.state.inputValue);
+        this.props.addPage(this.state.inputValue, this.props.currentNotebookId);
         this.setState({modalOpen: false})
     };
 
@@ -41,7 +41,7 @@ class PagePanel extends React.Component{
 
         const type = TYPE_ITEM.PAGE;
         const pages = this.props.pages.map( (page)=>
-                        (<PageItem key={page.id} title= {page.title} createDate= {page.createDate} />)
+                        (<PageItem key={page.notebookId} title= {page.title} createDate= {page.createDate} />)
         );
 
         let parentNotebookTitle;
@@ -49,10 +49,9 @@ class PagePanel extends React.Component{
             parentNotebookTitle = this.props.currentNotebook.title;
         }
 
-
         return (
             <Grid.Column width={this.props.width}>
-                <ButtonTop  type={type} onClick={this.openModal} />
+                <ButtonTop disabled={!this.props.currentNotebookId} type={type} onClick={this.openModal} />
                 <Header size='large'>{parentNotebookTitle}</Header>
                 <Modal open={this.state.modalOpen}>
                     <Modal.Header>{type} TITLE</Modal.Header>
@@ -77,15 +76,13 @@ class PagePanel extends React.Component{
 
 const mapDispatchToProps = dispatch => {
     return {
-        addPage: (title) => {
-            dispatch(addPageAction(title));
-        }
+        addPage: (title, currentNotebookId) => dispatch(addPageAction(title, currentNotebookId)),
     }
 };
 
 const getCurrentNotebook = (id, notebooks) => {
     let currentNotebook = notebooks.filter( (notebook)=> {
-            return notebook.id === id
+            return notebook.notebookId === id
         }
     );
     return currentNotebook[0];
@@ -95,6 +92,7 @@ const mapStateToProps = ( state ) => {
     return {
         pages: state.pages,
         currentNotebook: getCurrentNotebook(state.currentNotebookId, state.notebooks),
+        currentNotebookId: state.currentNotebookId,
     };
 };
 

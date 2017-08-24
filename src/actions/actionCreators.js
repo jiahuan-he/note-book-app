@@ -7,18 +7,19 @@ export const addNotebookAction = (title)=>{
             {
                 title: title,
                 createDate : 'today',
-                id: currentDateToString()
+                notebookId: currentDateToString()
             }
     }
 };
 
-export const addPageAction = (title)=> {
+export const addPageAction = (title, currentNotebookId)=> {
     return { type: ACTION.PAGE_ADD,
              payload:
                  {
                      title: title,
                      createDate : 'today',
-                     id: currentDateToString(),
+                     pageId: currentDateToString(),
+                     currentNotebookId: currentNotebookId,
                      editor: null,
                  }
     }
@@ -27,6 +28,6 @@ export const addPageAction = (title)=> {
 export const selectNotebookAction = (id)=> {
     return {
         type: ACTION.NOTEBOOK_SELECT,
-        payload: {id: id},
+        payload: {notebookId: id},
     }
 };

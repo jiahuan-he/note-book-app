@@ -34,7 +34,7 @@ class NotebookPanel extends React.Component{
 
         const type = TYPE_ITEM.NOTEBOOK;
         const notebooks = this.props.notebooks.map( (notebook)=>{
-            const id = notebook.id;
+            const id = notebook.notebookId;
             const title = notebook.title;
             const createDate = notebook.createDate;
             return (<NotebookItem
