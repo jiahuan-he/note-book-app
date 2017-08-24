@@ -3,7 +3,7 @@ import NotebookItem from '../components/NotebookItem'
 
 import { Grid, List,Button, Modal, Input} from 'semantic-ui-react'
 import {ButtonTop} from './PanelComponents'
-import {TYPE_ITEM} from '../constants/type';
+import {TYPE_ITEM} from '../util/constants';
 import { connect } from 'react-redux'
 import {addNotebookAction, selectNotebookAction} from '../actions/actionCreators';
 
@@ -34,12 +34,14 @@ class NotebookPanel extends React.Component{
 
         const type = TYPE_ITEM.NOTEBOOK;
         const notebooks = this.props.notebooks.map( (notebook)=>{
-            console.log(notebook.id);
+            const id = notebook.id;
+            const title = notebook.title;
+            const createDate = notebook.createDate;
             return (<NotebookItem
-                onClick = { (notebook)=>this.props.selectNotebook(notebook.id)}
-                key={notebook.id}
-                title= {notebook.title}
-                createDate= {notebook.createDate} />)
+                onClick = { (notebook)=> this.props.selectNotebook(id)}
+                key={id}
+                title= {title}
+                createDate= {createDate} />)
         }
 
         );

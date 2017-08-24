@@ -2,7 +2,7 @@ import React from 'react';
 import PageItem from '../components/PageItem'
 import { Grid, List,Button, Modal, Input} from 'semantic-ui-react'
 import {ButtonTop} from './PanelComponents'
-import {TYPE_ITEM} from '../constants/type';
+import {TYPE_ITEM} from '../util/constants';
 import { connect } from 'react-redux'
 import {addPageAction} from '../actions/actionCreators';
 

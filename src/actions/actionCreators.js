@@ -1,4 +1,4 @@
-import {ACTION} from '../constants/type';
+import {ACTION} from '../util/constants';
 import {currentDateToString} from '../util/util';
 
 export const addNotebookAction = (title)=>{
@@ -18,7 +18,8 @@ export const addPageAction = (title)=> {
                  {
                      title: title,
                      createDate : 'today',
-                     editor: null
+                     id: currentDateToString(),
+                     editor: null,
                  }
     }
 };
