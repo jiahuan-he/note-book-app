@@ -60,6 +60,8 @@ export const currentNotebookId = (state = 0 , action)=>{
             if (state === action.payload.notebookId){
                 return null;
             }
+            return state;
+            break;
         default:
             return state;
     }

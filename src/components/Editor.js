@@ -12,6 +12,7 @@ class Editor extends React.Component {
 
     handleChange(value) {
         this.setState({ text: value })
+
     }
 
     render() {
