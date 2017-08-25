@@ -31,7 +31,7 @@ class PagePanel extends React.Component{
         // params: notebookId;
         //         data{ title: }
         this.props.addPage(this.props.currentNotebookId, {title: this.state.inputValue});
-        this.setState({modalOpen: false})
+        this.setState({modalOpen: false, inputValue: ''})
     };
 
     handleCancel = ()=> {
@@ -42,7 +42,7 @@ class PagePanel extends React.Component{
 
         const type = TYPE_ITEM.PAGE;
         const pages = Object.values(this.props.pages).map( (page)=>
-                        (<PageItem key={page.notebookId} title= {page.title} createDate= {page.createDate} />)
+                        (<PageItem key={page.pageId} title= {page.title} createDate= {page.createDate} />)
         );
 
         return (

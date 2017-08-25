@@ -22,8 +22,19 @@ export const notebooks = (state = {}, action) => {
                    newState[key] = state[key];
                }
             });
-
             return newState;
+        case ACTION.PAGE_ADD:
+            const {notebookId, pageId} = action.payload;
+            // console.log("targetnotebook id: "+ targetNotebookId);
+            const targetNotebook =  state[notebookId];
+            if( !targetNotebook.pages){
+                targetNotebook.pages = [];
+            }
+            if(!state[action.payload.notebookId]){
+                console.log ( 'ERROR! NOTEBOOK REDUCER, PAGE ADD');
+            }
+            return {...state, [notebookId]: {...targetNotebook, pages: targetNotebook.pages.concat(pageId)}};
+
 
         default:
             return state;
@@ -33,7 +44,7 @@ export const notebooks = (state = {}, action) => {
 export const pages = (state= {}, action) => {
     switch (action.type){
         case ACTION.PAGE_ADD:
-            const newPage = { [action.payload.notebookId]: action.payload};
+            const newPage = { [action.payload.pageId]: action.payload};
             return {...state, ...newPage};
         default:
             return state;
