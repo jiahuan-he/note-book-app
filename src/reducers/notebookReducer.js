@@ -33,13 +33,12 @@ export const notebooks = (state = {}, action) => {
 export const pages = (state= {}, action) => {
     switch (action.type){
         case ACTION.PAGE_ADD:
-            const newPage = { [action.payload.pageId]: action.payload};
+            const newPage = { [action.payload.notebookId]: action.payload};
             return {...state, ...newPage};
         default:
             return state;
     }
 };
-
 
 
 export const currentNotebookId = (state = 0 , action)=>{

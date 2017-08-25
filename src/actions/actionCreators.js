@@ -12,14 +12,14 @@ export const addNotebookAction = (title)=>{
     }
 };
 
-export const addPageAction = (title, currentNotebookId)=> {
+export const addPageAction = (currentNotebookId, data)=> {
     return { type: ACTION.PAGE_ADD,
              payload:
                  {
-                     title: title,
+                     title: data.title,
                      createDate : 'today',
                      pageId: currentDateToString(),
-                     currentNotebookId: currentNotebookId,
+                     notebookId: currentNotebookId,
                      editor: null,
                  }
     }

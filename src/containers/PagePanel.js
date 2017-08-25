@@ -28,7 +28,9 @@ class PagePanel extends React.Component{
     };
 
     handleDone = ()=>{
-        this.props.addPage(this.state.inputValue, this.props.currentNotebookId);
+        // params: notebookId;
+        //         data{ title: }
+        this.props.addPage(this.props.currentNotebookId, {title: this.state.inputValue});
         this.setState({modalOpen: false})
     };
 
@@ -72,7 +74,7 @@ class PagePanel extends React.Component{
 
 const mapDispatchToProps = dispatch => {
     return {
-        addPage: (title, currentNotebookId) => dispatch(addPageAction(title, currentNotebookId)),
+        addPage: (currentNotebookId, title) => dispatch(addPageAction(currentNotebookId, title)),
     }
 };
 
