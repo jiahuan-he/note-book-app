@@ -27,7 +27,6 @@ class NotebookPanel extends React.Component{
         this.setState({modalOpen: true});
     };
 
-    editingNotebookId;
     handleDone = ()=>{
         const actionType = this.state.editingNotebookId ? ACTION.NOTEBOOK_EDIT : ACTION.NOTEBOOK_ADD;
 
@@ -60,7 +59,11 @@ class NotebookPanel extends React.Component{
     render(){
 
         const itemType = TYPE_ITEM.NOTEBOOK;
-        const notebooks = this.props.notebooks.map( (notebook)=>{
+
+
+
+
+        const notebooks = Object.values(this.props.notebooks).map( (notebook)=>{
             const id = notebook.notebookId;
             const title = notebook.title;
             const createDate = notebook.createDate;

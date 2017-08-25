@@ -39,19 +39,16 @@ class PagePanel extends React.Component{
     render(){
 
         const type = TYPE_ITEM.PAGE;
-        const pages = this.props.pages.map( (page)=>
+        const pages = Object.values(this.props.pages).map( (page)=>
                         (<PageItem key={page.notebookId} title= {page.title} createDate= {page.createDate} />)
         );
-
-        let parentNotebookTitle;
-        if( this.props.currentNotebook){
-            parentNotebookTitle = this.props.currentNotebook.title;
-        }
 
         return (
             <Grid.Column width={this.props.width}>
                 <ButtonTop disabled={!this.props.currentNotebookId} type={type} onClick={this.openModal} />
-                <Header size='large'>{parentNotebookTitle}</Header>
+                {this.props.currentNotebook &&
+                    <Header size='large'>{this.props.currentNotebook.title}</Header>
+                }
                 <Modal open={this.state.modalOpen}>
                     <Modal.Header>{type} TITLE</Modal.Header>
                     <Modal.Content >
@@ -80,8 +77,8 @@ const mapDispatchToProps = dispatch => {
 };
 
 const getCurrentNotebook = (id, notebooks) => {
-    let currentNotebook = notebooks.filter( (notebook)=> {
-            return notebook.notebookId === id
+    let currentNotebook = Object.values(notebooks).filter( (notebookValue)=> {
+            return notebookValue.notebookId === id
         }
     );
     return currentNotebook[0];

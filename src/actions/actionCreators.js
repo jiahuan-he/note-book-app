@@ -42,6 +42,6 @@ export const deleteNotebookAction = (id)=> {
 export const editNotebookAction = (editingNotebookId, data)=> {
     return {
         type: ACTION.NOTEBOOK_EDIT,
-        payload: {editingNotebookId: editingNotebookId, data: data},
+        payload: {notebookId: editingNotebookId, data: data},
     }
 };

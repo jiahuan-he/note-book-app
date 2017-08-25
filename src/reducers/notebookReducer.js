@@ -1,36 +1,46 @@
 import {ACTION} from "../util/constants";
 
-
-export const notebooks = (state = [], action) => {
+export const notebooks = (state = {}, action) => {
     switch (action.type){
         case ACTION.NOTEBOOK_ADD:
-            return [...state, action.payload];
+            const newNotebook = {[action.payload.notebookId]: action.payload};
+            return {...state,  ...newNotebook};
 
         case ACTION.NOTEBOOK_DELETE:
-            return state.filter( (notebook)=> notebook.notebookId !== action.payload.notebookId);
+
+            const currentNotebookKeys =  Object.keys(state).filter( (key)=> key!== action.payload.notebookId);
+            const currentNotebooks = currentNotebookKeys.map((key)=> state[key]);
+            return currentNotebooks;
 
         case ACTION.NOTEBOOK_EDIT:
-            const newNotebooks = state.map( (notebook)=> {
-                if ( notebook.notebookId === action.payload.editingNotebookId){
-                    return {...notebook, ...action.payload.data};
-                }
-                return notebook;
+            const newState = {};
+            Object.keys(state).forEach((key)=>{
+               if (key === action.payload.notebookId){
+                   newState[key] = {...state[key], ...action.payload.data};
+               }
+               else{
+                   newState[key] = state[key];
+               }
             });
-            return newNotebooks;
+
+            return newState;
 
         default:
             return state;
     }
 };
 
-export const pages = (state= [], action) => {
+export const pages = (state= {}, action) => {
     switch (action.type){
         case ACTION.PAGE_ADD:
-            return [...state, action.payload];
+            const newPage = { [action.payload.pageId]: action.payload};
+            return {...state, ...newPage};
         default:
             return state;
     }
 };
+
+
 
 export const currentNotebookId = (state = 0 , action)=>{
     switch (action.type){
