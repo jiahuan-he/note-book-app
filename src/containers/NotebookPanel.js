@@ -73,7 +73,10 @@ class NotebookPanel extends React.Component{
                 onEditButtonClicked = {() => this.openEditModal(notebook)}
                 key={id}
                 title= {title}
-                createDate= {createDate} />)
+                createDate= {createDate}
+                pageCount = {notebook.pageCount}
+                />
+            )
         }
         );
 
@@ -125,6 +128,7 @@ const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = ( state ) => {
     return {
+
         notebooks: state.notebooks,
         //TODO change current notebook's appearance
         currentNotebookId: state.currentNotebookId,

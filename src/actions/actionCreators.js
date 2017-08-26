@@ -6,8 +6,9 @@ export const addNotebookAction = (title)=>{
         payload:
             {
                 title: title,
-                createDate : 'today',
-                notebookId: currentDateToString()
+                createDate : new Date(),
+                notebookId: currentDateToString(),
+                pageCount : 0,
             }
     }
 };
@@ -17,7 +18,7 @@ export const addPageAction = (currentNotebookId, data)=> {
              payload:
                  {
                      title: data.title,
-                     createDate : 'today',
+                     createDate : new Date(),
                      pageId: currentDateToString(),
                      notebookId: currentNotebookId,
                      editor: null,
@@ -45,3 +46,10 @@ export const editNotebookAction = (editingNotebookId, data)=> {
         payload: {notebookId: editingNotebookId, data: data},
     }
 };
+
+export const selectPageAction = (pageId) => {
+    return {
+        type: ACTION.PAGE_SELECT,
+        payload: {pageId : pageId},
+    }
+}

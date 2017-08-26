@@ -1,7 +1,10 @@
 import React from 'react';
-import { Card , Button} from 'semantic-ui-react'
+import { Card , Button} from 'semantic-ui-react';
+import {monthNames} from '../util/constants';
+import { formatDate } from '../util/util';
 
-const NotebookItem = ({title, createDate, onClick, onDeleteButtonClicked, onEditButtonClicked})=> {
+
+const NotebookItem = ({title, createDate, onClick, onDeleteButtonClicked, onEditButtonClicked, pageCount})=> {
 
     return (
         <div>
@@ -11,13 +14,16 @@ const NotebookItem = ({title, createDate, onClick, onDeleteButtonClicked, onEdit
                         <Card.Header>
                             {title}
                         </Card.Header>
-                        <Card.Meta>{createDate+ " "}
-                            Pages: 6
+                        <Card.Meta>
+                            {formatDate(createDate)}
+                        </Card.Meta>
+                        <Card.Meta>
+                            page count {pageCount}
                         </Card.Meta>
                     </div>
-                    <div className='ui two buttons'>
-                        <Button onClick={onEditButtonClicked} basic color='green'>Edit</Button>
-                        <Button onClick={onDeleteButtonClicked} basic color='red'>Delete</Button>
+                    <div>
+                        <Button size='mini' onClick={onEditButtonClicked} basic color='green'>Edit</Button>
+                        <Button size='mini' onClick={onDeleteButtonClicked} basic color='red'>Delete</Button>
                     </div>
                 </Card.Content>
             </Card>

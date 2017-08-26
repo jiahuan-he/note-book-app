@@ -4,7 +4,7 @@ import { Grid, List,Button, Modal, Input, Header} from 'semantic-ui-react'
 import {ButtonTop} from './PanelComponents'
 import {TYPE_ITEM} from '../util/constants';
 import { connect } from 'react-redux'
-import {addPageAction} from '../actions/actionCreators';
+import {selectPageAction , addPageAction} from '../actions/actionCreators';
 
 class PagePanel extends React.Component{
 
@@ -41,8 +41,13 @@ class PagePanel extends React.Component{
     render(){
 
         const type = TYPE_ITEM.PAGE;
+
         const pages = Object.values(this.props.pages).map( (page)=>
-                        (<PageItem key={page.pageId} title= {page.title} createDate= {page.createDate} />)
+                        (<PageItem key={page.pageId}
+                                   title= {page.title}
+                                   createDate= {page.createDate}
+                                   onClick = {() => this.props.selectPage(page.pageId) }
+                        />)
         );
 
         return (
@@ -72,12 +77,6 @@ class PagePanel extends React.Component{
     }
 }
 
-const mapDispatchToProps = dispatch => {
-    return {
-        addPage: (currentNotebookId, title) => dispatch(addPageAction(currentNotebookId, title)),
-    }
-};
-
 const getCurrentNotebook = (id, notebooks) => {
     let currentNotebook = Object.values(notebooks).filter( (notebookValue)=> {
             return notebookValue.notebookId === id
@@ -95,6 +94,15 @@ const getCurrentPages = (currentNotebookId, notebooks, pages)=> {
     }
     return currentPages;
 };
+
+
+const mapDispatchToProps = dispatch => {
+    return {
+        addPage: (currentNotebookId, title) => dispatch(addPageAction(currentNotebookId, title)),
+        selectPage: (pageId) => dispatch(selectPageAction(pageId)),
+    }
+};
+
 
 const mapStateToProps = ( state ) => {
     return {

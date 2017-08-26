@@ -1,4 +1,4 @@
-// As item id
+import {monthNames} from './constants'
 export const currentDateToString= ()=> {
     let date = new Date();
     return (''
@@ -8,5 +8,9 @@ export const currentDateToString= ()=> {
     + date.getHours().toString()
     + date.getSeconds().toString()
     + date.getMilliseconds().toString())
+};
+
+export const formatDate = (date) => {
+    return date.getDate()+'-'+ monthNames[date.getMonth()] +'-'+date.getFullYear();
 }
 

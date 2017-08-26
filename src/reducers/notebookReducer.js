@@ -25,8 +25,8 @@ export const notebooks = (state = {}, action) => {
             return newState;
         case ACTION.PAGE_ADD:
             const {notebookId, pageId} = action.payload;
-            // console.log("targetnotebook id: "+ targetNotebookId);
             const targetNotebook =  state[notebookId];
+            targetNotebook.pageCount ++;
             if( !targetNotebook.pages){
                 targetNotebook.pages = [];
             }
@@ -66,5 +66,19 @@ export const currentNotebookId = (state = 0 , action)=>{
     }
 };
 
+
+export const currentPageId = (state = 0 , action)=>{
+    switch (action.type){
+        case ACTION.PAGE_SELECT:
+            return action.payload.pageId;
+        // case ACTION.NOTEBOOK_DELETE:
+        //     if (state === action.payload.notebookId){
+        //         return null;
+        //     }
+        //     return state;
+        default:
+            return state;
+    }
+};
 
 
