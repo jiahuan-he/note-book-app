@@ -61,7 +61,6 @@ export const currentNotebookId = (state = 0 , action)=>{
                 return null;
             }
             return state;
-            break;
         default:
             return state;
     }

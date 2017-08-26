@@ -1,18 +1,33 @@
 import React from 'react';
 
-import ReactQuill from 'react-quill'; // ES6
-import 'react-quill/dist/quill.snow.css'; // ES6
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 class Editor extends React.Component {
     constructor(props) {
         super(props);
         this.state = { text: '' , readOnly: false}; // You can also pass a Quill Delta here
-        this.handleChange = this.handleChange.bind(this)
+        this.handleChange = this.handleChange.bind(this);
+        this.quillRef = null;      // Quill instance
+        this.reactQuillRef = null;
     }
 
-    handleChange(value) {
-        this.setState({ text: value })
+    componentDidMount() {
+        this.attachQuillRefs()
+    }
 
+    componentDidUpdate() {
+        this.attachQuillRefs()
+    }
+
+    attachQuillRefs = () => {
+        if (typeof this.reactQuillRef.getEditor !== 'function') return;
+        this.quillRef = this.reactQuillRef.getEditor();
+    };
+
+    handleChange(value) {
+        this.setState({ text: value });
+        console.log(this.quillRef.getContents());
     }
 
     render() {
@@ -21,6 +36,7 @@ class Editor extends React.Component {
                 <ReactQuill
                     style = { {height: '500px'}}
                     value={this.state.text}
+                    ref={(el) => { this.reactQuillRef = el }}
                     modules = {{
                         toolbar: [
                             [{ 'header': [1, 2, 3, false] }],

@@ -86,9 +86,19 @@ const getCurrentNotebook = (id, notebooks) => {
     return currentNotebook[0];
 };
 
+const getCurrentPages = (currentNotebookId, notebooks, pages)=> {
+    const currentNotebook = getCurrentNotebook(currentNotebookId, notebooks);
+    let currentPages = [];
+    if (currentNotebook && currentNotebook.pages){
+        const pageIds = currentNotebook.pages;
+        currentPages = pageIds.map( (pageId)=> pages[pageId]);
+    }
+    return currentPages;
+};
+
 const mapStateToProps = ( state ) => {
     return {
-        pages: state.pages,
+        pages: getCurrentPages(state.currentNotebookId, state.notebooks, state.pages),
         currentNotebook: getCurrentNotebook(state.currentNotebookId, state.notebooks),
         currentNotebookId: state.currentNotebookId,
     };
