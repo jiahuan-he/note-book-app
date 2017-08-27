@@ -52,4 +52,11 @@ export const selectPageAction = (pageId) => {
         type: ACTION.PAGE_SELECT,
         payload: {pageId : pageId},
     }
-}
+};
+
+export const saveNoteAction = (notes, currentPageId) => {
+    return {
+        type: ACTION.NOTES_SAVE_NOTE,
+        payload: {targetPageId: currentPageId, note: notes}
+    }
+};

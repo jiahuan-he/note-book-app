@@ -11,3 +11,12 @@ export const ButtonTop = ({type, onClick, disabled}) =>
         </Button.Content>
     </Button>;
 
+export const ReadOnlyButton = () => {
+    return <Button secondary>Read Only</Button>
+};
+
+export const SaveEditorButton = ({onClick}) => {
+    return <Button
+        onClick={onClick}
+        positive>Save</Button>
+};

@@ -61,8 +61,6 @@ class NotebookPanel extends React.Component{
         const itemType = TYPE_ITEM.NOTEBOOK;
 
 
-
-
         const notebooks = Object.values(this.props.notebooks).map( (notebook)=>{
             const id = notebook.notebookId;
             const title = notebook.title;
@@ -122,7 +120,6 @@ const mapDispatchToProps = dispatch => {
         editNotebook: (editingNotebookId, data) => {
             dispatch(editNotebookAction(editingNotebookId, data));
         }
-
     }
 };
 

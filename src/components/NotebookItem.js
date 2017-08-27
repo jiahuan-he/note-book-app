@@ -1,6 +1,5 @@
 import React from 'react';
 import { Card , Button} from 'semantic-ui-react';
-import {monthNames} from '../util/constants';
 import { formatDate } from '../util/util';
 
 

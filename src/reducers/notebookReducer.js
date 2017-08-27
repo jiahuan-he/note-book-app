@@ -82,3 +82,16 @@ export const currentPageId = (state = 0 , action)=>{
 };
 
 
+export const notes = (state = {}, action) => {
+    switch (action.type) {
+        case ACTION.NOTES_SAVE_NOTE:
+            const newNote = { [action.payload.targetPageId]: action.payload};
+            return {...state, ...newNote};
+        default:
+            return state;
+    }
+};
+
+
+
+
