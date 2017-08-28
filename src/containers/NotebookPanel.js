@@ -56,6 +56,14 @@ class NotebookPanel extends React.Component{
         this.setState ({editingNotebookId: editingNotebook.notebookId});
     };
 
+    handleNotebookItemClick = (id)=>{
+        if(id === this.props.currentNotebookId){
+            return;
+        }
+        this.props.selectNotebook(id);
+    };
+
+
     render(){
 
         const itemType = TYPE_ITEM.NOTEBOOK;
@@ -66,7 +74,7 @@ class NotebookPanel extends React.Component{
             const title = notebook.title;
             const createDate = notebook.createDate;
             return (<NotebookItem
-                onClick = {()=> this.props.selectNotebook(id)}
+                onClick = {()=> this.handleNotebookItemClick(id)}
                 onDeleteButtonClicked = {() => this.props.deleteNotebook(id)}
                 onEditButtonClicked = {() => this.openEditModal(notebook)}
                 key={id}

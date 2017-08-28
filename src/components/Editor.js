@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import {SaveEditorButton, ReadOnlyButton} from '../containers/PanelComponents';
-import store from '../reducers/store';
 
 class Editor extends React.Component {
     constructor(props) {
@@ -12,19 +11,7 @@ class Editor extends React.Component {
         this.handleChange = this.handleChange.bind(this);
         this.quillRef = null;      // Quill instance
         this.reactQuillRef = null;
-        // this.unsubscribe = store.subscribe(this.switchPage);
     }
-
-    switchPage = () =>{
-        if(store.getState().currentPageId === 0){
-            return;
-        }
-        console.log(" ");
-        console.log( " current delta : ");
-        console.dir(this.props.currentDelta);
-        console.log(" ");
-        this.setState( {text: this.props.currentDelta});
-    };
 
     componentDidMount() {
         this.attachQuillRefs();
@@ -32,6 +19,7 @@ class Editor extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
+
         this.setState( {text: nextProps.currentDelta});
     }
 
@@ -88,19 +76,32 @@ class Editor extends React.Component {
 }
 
 
-const getCurrentDelta = (currentPageId, notes)=> {
+const getCurrentDelta = (currentPageId, notes, pages)=> {
+    if(currentPageId === 0 || !currentPageId || !notes ){
+        return null;
+    }
+
+    if(!pages[currentPageId]){
+        return null;
+    }
+
+    // if(!pages[currentPageId]){}
+
     let delta = null;
     Object.keys(notes).forEach( (key)=> {
         if(key === currentPageId){
             delta = notes[key].note;
         }
     });
+
+
+
     return delta;
 };
 
 const mapStateToProps = (state)=> {
     return{
-        currentDelta : getCurrentDelta(state.currentPageId, state.notes)
+        currentDelta : getCurrentDelta(state.currentPageId, state.notes, state.pages)
     }
 };
 

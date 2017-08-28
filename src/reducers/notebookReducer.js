@@ -46,6 +46,23 @@ export const pages = (state= {}, action) => {
         case ACTION.PAGE_ADD:
             const newPage = { [action.payload.pageId]: action.payload};
             return {...state, ...newPage};
+
+        case ACTION.NOTEBOOK_DELETE:
+            const notebookId = action.payload.notebookId;
+
+            let newKeys =[];
+            Object.values(state).forEach( (page) => {
+                if(page.notebookId !== notebookId){
+                    newKeys.push(page.pageId);
+                }
+            });
+
+            const nextState = newKeys.map( (key)=> {
+               return { [key]: state[key]};
+            });
+
+            return nextState;
+
         default:
             return state;
     }
@@ -71,9 +88,8 @@ export const currentPageId = (state = 0 , action)=>{
     switch (action.type){
         case ACTION.PAGE_SELECT:
             return action.payload.pageId;
-        // case ACTION.NOTEBOOK_DELETE:
-        //     if (state === action.payload.notebookId){
-        //         return null;
+        case ACTION.NOTEBOOK_SELECT:
+            return 0;
         //     }
         //     return state;
         default:
