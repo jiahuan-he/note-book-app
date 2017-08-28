@@ -82,17 +82,23 @@ const getCurrentNotebook = (id, notebooks) => {
             return notebookValue.notebookId === id
         }
     );
+    console.log('currentNoteBook: ');
+    console.dir(currentNotebook);
     return currentNotebook[0];
 };
 
 const getCurrentPages = (currentNotebookId, notebooks, pages)=> {
     const currentNotebook = getCurrentNotebook(currentNotebookId, notebooks);
+    if (!currentNotebook){
+        return [];
+    }
     let currentPages = [];
     if (currentNotebook && currentNotebook.pages){
         const pageIds = currentNotebook.pages;
         currentPages = pageIds.map( (pageId)=> pages[pageId]);
     }
     return currentPages;
+
 };
 
 

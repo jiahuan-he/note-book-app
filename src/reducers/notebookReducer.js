@@ -9,7 +9,8 @@ export const notebooks = (state = {}, action) => {
         case ACTION.NOTEBOOK_DELETE:
 
             const currentNotebookKeys =  Object.keys(state).filter( (key)=> key!== action.payload.notebookId);
-            const currentNotebooks = currentNotebookKeys.map((key)=> state[key]);
+            const currentNotebooks = {};
+            currentNotebookKeys.forEach( (key) => currentNotebooks[key] = state[key]);
             return currentNotebooks;
 
         case ACTION.NOTEBOOK_EDIT:
@@ -35,7 +36,6 @@ export const notebooks = (state = {}, action) => {
             }
             return {...state, [notebookId]: {...targetNotebook, pages: targetNotebook.pages.concat(pageId)}};
 
-
         default:
             return state;
     }
@@ -49,17 +49,14 @@ export const pages = (state= {}, action) => {
 
         case ACTION.NOTEBOOK_DELETE:
             const notebookId = action.payload.notebookId;
-
             let newKeys =[];
             Object.values(state).forEach( (page) => {
                 if(page.notebookId !== notebookId){
                     newKeys.push(page.pageId);
                 }
             });
-
-            const nextState = newKeys.map( (key)=> {
-               return { [key]: state[key]};
-            });
+            const nextState ={};
+            newKeys.forEach( (key)=> nextState[key] = state[key]);
 
             return nextState;
 

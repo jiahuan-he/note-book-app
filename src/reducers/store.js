@@ -6,7 +6,6 @@ import logger from 'redux-logger'
 
 const reducer = combineReducers({notes, currentPageId, currentNotebookId, notebooks, pages});
 const store = createStore( reducer, applyMiddleware(logger));
-console.log(store.getState());
 
 export default store;
 
