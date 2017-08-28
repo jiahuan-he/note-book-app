@@ -5,6 +5,8 @@ import {ButtonTop} from './PanelComponents'
 import {TYPE_ITEM} from '../util/constants';
 import { connect } from 'react-redux'
 import {selectPageAction , addPageAction} from '../actions/actionCreators';
+import PropTypes from 'prop-types';
+
 
 class PagePanel extends React.Component{
 
@@ -82,8 +84,7 @@ const getCurrentNotebook = (id, notebooks) => {
             return notebookValue.notebookId === id
         }
     );
-    console.log('currentNoteBook: ');
-    console.dir(currentNotebook);
+
     return currentNotebook[0];
 };
 
@@ -97,6 +98,7 @@ const getCurrentPages = (currentNotebookId, notebooks, pages)=> {
         const pageIds = currentNotebook.pages;
         currentPages = pageIds.map( (pageId)=> pages[pageId]);
     }
+    console.log(currentPages)
     return currentPages;
 
 };
@@ -116,6 +118,12 @@ const mapStateToProps = ( state ) => {
         currentNotebook: getCurrentNotebook(state.currentNotebookId, state.notebooks),
         currentNotebookId: state.currentNotebookId,
     };
+};
+
+PagePanel.propTypes = {
+    pages: PropTypes.arrayOf(PropTypes.object),
+    currentNotebook: PropTypes.object,
+    currentNotebookId: PropTypes.string,
 };
 
 

@@ -31,7 +31,8 @@ const mapStateToProps = (state) => {
     return {
         currentPageId : state.currentPageId,
     }
-}
+};
+
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditorPanel);

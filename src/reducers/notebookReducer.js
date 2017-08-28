@@ -66,7 +66,7 @@ export const pages = (state= {}, action) => {
 };
 
 
-export const currentNotebookId = (state = 0 , action)=>{
+export const currentNotebookId = (state = "0" , action)=>{
     switch (action.type){
         case ACTION.NOTEBOOK_SELECT:
             return action.payload.notebookId;
@@ -81,7 +81,7 @@ export const currentNotebookId = (state = 0 , action)=>{
 };
 
 
-export const currentPageId = (state = 0 , action)=>{
+export const currentPageId = (state = "0" , action)=>{
     switch (action.type){
         case ACTION.PAGE_SELECT:
             return action.payload.pageId;

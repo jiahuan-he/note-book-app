@@ -11,6 +11,8 @@ import {
     addNotebookAction,
     selectNotebookAction} from '../actions/actionCreators';
 import {ACTION} from "../util/constants";
+import PropTypes from 'prop-types';
+
 
 class NotebookPanel extends React.Component{
 
@@ -138,6 +140,11 @@ const mapStateToProps = ( state ) => {
         //TODO change current notebook's appearance
         currentNotebookId: state.currentNotebookId,
     };
+};
+
+NotebookPanel.propTypes = {
+    notebooks: PropTypes.object,
+    currentNotebookId: PropTypes.string,
 };
 
 
