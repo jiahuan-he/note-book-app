@@ -11,7 +11,11 @@ class EditorPanel extends React.Component{
     render(){
         return (
             <Grid.Column width={this.props.width}>
-                <Editor currentPageId={this.props.currentPageId} saveNotes={this.props.saveNotes}/>
+                {
+                    this.props.currentPageId
+                    && this.props.currentPageId!== '0'
+                    && <Editor currentPageId={this.props.currentPageId} saveNotes={this.props.saveNotes}/>
+                }
             </Grid.Column>
         );
     }
@@ -25,6 +29,10 @@ const mapDispatchToProps = dispatch => {
         },
 
     }
+};
+
+const getCurrentPageId = ( currentPageId )=>{
+
 };
 
 const mapStateToProps = (state) => {

@@ -54,7 +54,7 @@ class PagePanel extends React.Component{
 
         return (
             <Grid.Column width={this.props.width}>
-                <ButtonTop disabled={!this.props.currentNotebookId} type={type} onClick={this.openModal} />
+                <ButtonTop disabled={!this.props.currentNotebookId || this.props.currentNotebookId ==='0'} type={type} onClick={this.openModal} />
                 {this.props.currentNotebook &&
                     <Header size='large'>{this.props.currentNotebook.title}</Header>
                 }
