@@ -5,7 +5,9 @@ import { Grid } from 'semantic-ui-react'
 import NotebookPanel from './NotebookPanel';
 import PagePanel from './PagePanel';
 import EditorPanel from './EditorPanel';
+import Login from './login';
 
+import { BrowserRouter,Route } from 'react-router-dom'
 
 class App extends React.Component{
 
@@ -28,6 +30,15 @@ class App extends React.Component{
     }
 }
 
+const AppLogin = () => (
+    <BrowserRouter>
+        <div>
+            <Route exact path="/" component={Login}/>
+            <Route exact path="/edit" component={App}/>
+        </div>
+    </BrowserRouter>
+);
 
 
-export default App;
+
+export default AppLogin;
