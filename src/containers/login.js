@@ -1,9 +1,8 @@
 import React from 'react';
 import { Button, Form, Segment, Input} from 'semantic-ui-react';
 import {Redirect} from 'react-router-dom';
-import { signUp} from '../util/fb';
 import { connect } from 'react-redux';
-import { loginAction } from '../actions/actionCreators';
+import { loginAction, signUpAction} from '../actions/actionCreators';
 
 
 
@@ -18,11 +17,13 @@ class Login extends React.Component {
     constructor(props){
         super(props);
         this.state =
-            { redirectToReferrer: false }
+            {
+                redirectToReferrer: false,
+                email: '',
+                password: '',
+            }
         ;
     }
-
-
 
     render(){
 
@@ -40,6 +41,7 @@ class Login extends React.Component {
                 <Segment>
                     <Form.Field>
                         <Input
+                            onChange = { (e) => this.setState({email: e.target.value})}
                             icon='mail'
                             iconPosition='left'
                             placeholder='Email' />
@@ -48,22 +50,17 @@ class Login extends React.Component {
                 <Segment>
                     <Form.Field>
                         <Input
+                            onChange={ (e) => this.setState({password: e.target.value}) }
                             icon='lock'
                             iconPosition='left'
-                            placeholder='Passward' />
+                            placeholder='Password' />
                     </Form.Field>
                 </Segment>
                 <Segment>
-                    <Button onClick={() => this.props.dispatch(loginAction('tempemail@gmail.com', '123456'))}
+                    <Button onClick={() => this.props.dispatch(loginAction(this.state.email, this.state.password))}
                             type='submit'>Login
                     </Button>
-                    <Button onClick={() => {signUp(
-                        'tempemail@gmail.com',
-                        '123456',
-                        ( error )=>{
-                            console.log(error.code + error.message);
-                        }
-                    )}}
+                    <Button onClick={() => this.props.dispatch(signUpAction(this.state.email, this.state.password))}
                             type='submit'>Signup
                     </Button>
                 </Segment>

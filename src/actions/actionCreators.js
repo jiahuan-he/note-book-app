@@ -89,3 +89,32 @@ export const loginAction = (email, password) => {
         })
     }
 };
+
+
+export const signUpAction = (email, password) => {
+
+    return (dispatch) => {
+        dispatch({
+                type: ACTION.SIGNUP_START
+            }
+        );
+
+        signUp( email, password, (error) => dispatch({
+            type: ACTION.SIGNUP_ERROR,
+            payload: {error: error}
+        }));
+
+        onLoginStateChange( ( user )=> {
+            if (user){
+                dispatch(
+                    {
+                        type: ACTION.LOGIN_SUCCESS,
+                        payload: {
+                            email: user.email
+                        }
+                    }
+                )
+            }
+        })
+    }
+};
