@@ -17,7 +17,7 @@ class Login extends React.Component {
 
     constructor(props){
         super(props);
-
+        console.log(" CONSTRUCTOR LOGIN");
         let shouldRedirect = false;
         this.state =
             {
@@ -31,7 +31,9 @@ class Login extends React.Component {
         this.unsubscrib = firebase.auth().onAuthStateChanged( (user) => {
             if (user) {
                 this.props.dispatch({ type: ACTION.DETECT_LOGGED_IN, payload: {user: user}})
-            } else {
+            }
+            else {
+                console.log(user);
             }
         });
     }
@@ -42,7 +44,6 @@ class Login extends React.Component {
 
     render(){
         if (this.props.currentUser) {
-            this.unsubscrib();
             return (
                 <Redirect to="/edit"/>
             )
@@ -78,17 +79,6 @@ class Login extends React.Component {
                     <Button onClick={() => this.props.dispatch(signUpAction(this.state.email, this.state.password))}
                             type='submit'>Signup
                     </Button>
-                    <Button onClick={ () => {
-                        firebase.auth().onAuthStateChanged( (user) => {
-                            if (user) {
-                                console.log(user);
-                            } else {
-                            }
-                        });
-                    }}>
-                        CHECK
-                    </Button>
-
                 </Segment>
             </Segment.Group>
         </Form>)

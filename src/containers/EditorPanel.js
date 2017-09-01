@@ -29,10 +29,6 @@ const mapDispatchToProps = dispatch => {
     }
 };
 
-const getCurrentPageId = ( currentPageId )=>{
-
-};
-
 const mapStateToProps = (state) => {
     return {
         currentPageId : state.currentPageId,

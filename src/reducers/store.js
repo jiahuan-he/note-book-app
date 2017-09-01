@@ -1,6 +1,6 @@
 import { combineReducers,applyMiddleware } from 'redux'
 import { createStore, compose } from 'redux'
-import {currentUser ,notes, currentPageId, currentNotebookId, notebooks, pages} from "./notebookReducer";
+import {currentUser ,notes, currentPageId, currentNotebookId, notebooks, pages} from "./reducers";
 import logger from 'redux-logger'
 import thunk from 'redux-thunk';
 
