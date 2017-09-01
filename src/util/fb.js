@@ -30,6 +30,13 @@ export const onLoginStateChange = ( onChange )=> {
     );
 };
 
+export const logout = ( then, onError ) => {
+    firebase.auth().signOut()
+        .then(then)
+        .catch( (error) => onError(error));
+};
+
+export default firebase;
 
 
 

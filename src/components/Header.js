@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import {addNotebookAction} from "../actions/actionCreators";
+import {logoutAction} from "../actions/actionCreators";
 
 import {
     Button,
@@ -22,7 +22,9 @@ class Header extends React.Component{
                             <Button inverted as='a'>Log in</Button>
                         </Menu.Item>
                         <Menu.Item>
-                            <Button onClick={this.props.onAddButtonClick} as='a' primary>Sign Up</Button>
+                            <Button onClick={
+                                this.props.logout
+                            } as='a' >Logout</Button>
                         </Menu.Item>
                     </Menu.Menu>
                 </Container>
@@ -33,11 +35,12 @@ class Header extends React.Component{
 
 const mapDispatchToProps = dispatch => {
     return {
-        onAddButtonClick: () => {
-            dispatch(addNotebookAction());
+        logout : () => {
+            dispatch(logoutAction())
         }
     }
 };
+
 
 
 

@@ -1,6 +1,6 @@
 import {ACTION} from '../util/constants';
 import {currentDateToString} from '../util/util';
-import {login, onLoginStateChange, signUp} from '../util/fb';
+import {logout, login, onLoginStateChange, signUp} from '../util/fb';
 
 export const addNotebookAction = (title)=>{
     return { type: ACTION.NOTEBOOK_ADD,
@@ -75,18 +75,18 @@ export const loginAction = (email, password) => {
             payload: {error: error}
         }));
 
-        onLoginStateChange( ( user )=> {
-            if (user){
-                dispatch(
-                    {
-                        type: ACTION.LOGIN_SUCCESS,
-                        payload: {
-                            email: user.email
-                        }
-                    }
-                )
-            }
-        })
+        // onLoginStateChange( ( user )=> {
+        //     if (user){
+        //         dispatch(
+        //             {
+        //                 type: ACTION.LOGIN_SUCCESS,
+        //                 payload: {
+        //                     user: user
+        //                 }
+        //             }
+        //         )
+        //     }
+        // })
     }
 };
 
@@ -104,17 +104,44 @@ export const signUpAction = (email, password) => {
             payload: {error: error}
         }));
 
-        onLoginStateChange( ( user )=> {
-            if (user){
+        // onLoginStateChange( ( user )=> {
+        //     if (user){
+        //         dispatch(
+        //             {
+        //                 type: ACTION.LOGIN_SUCCESS,
+        //                 payload: {
+        //                     user : user
+        //                 }
+        //             }
+        //         );
+        //     }
+        // })
+    }
+};
+
+export const logoutAction = () =>{
+
+    return (dispatch) => {
+        dispatch({
+            type: ACTION.LOGOUT_START
+        });
+
+        logout(
+            () => {
+                // dispatch(
+                //     {
+                //         type: ACTION.LOGOUT_SUCCESS
+                //     }
+                // )
+            },
+            (error) => {
                 dispatch(
                     {
-                        type: ACTION.LOGIN_SUCCESS,
-                        payload: {
-                            email: user.email
-                        }
+                        type: ACTION.LOGOUT_ERROR,
+                        payload: {error: error}
                     }
                 )
             }
-        })
+        )
     }
 };

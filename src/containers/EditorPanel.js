@@ -21,13 +21,11 @@ class EditorPanel extends React.Component{
     }
 }
 
-
 const mapDispatchToProps = dispatch => {
     return {
         saveNotes: (notes, currentPageId) => {
             dispatch(saveNoteAction(notes, currentPageId));
         },
-
     }
 };
 

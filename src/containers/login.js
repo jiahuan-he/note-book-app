@@ -3,7 +3,8 @@ import { Button, Form, Segment, Input} from 'semantic-ui-react';
 import {Redirect} from 'react-router-dom';
 import { connect } from 'react-redux';
 import { loginAction, signUpAction} from '../actions/actionCreators';
-
+import firebase from '../util/fb';
+import {ACTION} from '../util/constants';
 
 
 const loginStyle = {
@@ -16,22 +17,34 @@ class Login extends React.Component {
 
     constructor(props){
         super(props);
+
+        let shouldRedirect = false;
         this.state =
             {
-                redirectToReferrer: false,
+                redirectToReferrer: shouldRedirect,
                 email: '',
-                password: '',
+                password: '123456',
+            };
+    }
+
+    componentDidMount(){
+        this.unsubscrib = firebase.auth().onAuthStateChanged( (user) => {
+            if (user) {
+                this.props.dispatch({ type: ACTION.DETECT_LOGGED_IN, payload: {user: user}})
+            } else {
             }
-        ;
+        });
+    }
+
+    componentWillUnmount () {
+        this.unsubscrib()
     }
 
     render(){
-
-        const { redirectToReferrer } = this.state
-
-        if (redirectToReferrer) {
+        if (this.props.currentUser) {
+            this.unsubscrib();
             return (
-                <Redirect to="/edit" push/>
+                <Redirect to="/edit"/>
             )
         }
 
@@ -53,7 +66,9 @@ class Login extends React.Component {
                             onChange={ (e) => this.setState({password: e.target.value}) }
                             icon='lock'
                             iconPosition='left'
-                            placeholder='Password' />
+                            placeholder='Password'
+                            type = "password"
+                        />
                     </Form.Field>
                 </Segment>
                 <Segment>
@@ -63,6 +78,17 @@ class Login extends React.Component {
                     <Button onClick={() => this.props.dispatch(signUpAction(this.state.email, this.state.password))}
                             type='submit'>Signup
                     </Button>
+                    <Button onClick={ () => {
+                        firebase.auth().onAuthStateChanged( (user) => {
+                            if (user) {
+                                console.log(user);
+                            } else {
+                            }
+                        });
+                    }}>
+                        CHECK
+                    </Button>
+
                 </Segment>
             </Segment.Group>
         </Form>)
@@ -70,4 +96,13 @@ class Login extends React.Component {
 }
 
 
-export default connect()(Login);
+const mapStateToProps = (state) => {
+    return {
+        currentUser : state.currentUser,
+    }
+};
+
+
+
+
+export default connect(mapStateToProps)(Login);

@@ -105,7 +105,29 @@ export const notes = (state = {}, action) => {
     }
 };
 
+export const currentUser = ( state = null, action) => {
+    switch (action.type) {
+        case ACTION.LOGIN_START:
+            return null;
 
+        case ACTION.LOGIN_ERROR:
+            return null;
+
+        case ACTION.LOGIN_SUCCESS:
+            return action.payload.user;
+
+        case ACTION.LOGOUT_SUCCESS:
+            return null;
+        case "DETECT_LOGGED_IN":
+            return action.payload.user;
+        case "DETECT_LOGGED_OUT":
+            return null;
+
+        default:
+            return state;
+    }
+
+};
 
 
 

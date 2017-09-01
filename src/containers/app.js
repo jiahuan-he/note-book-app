@@ -5,13 +5,33 @@ import { Grid } from 'semantic-ui-react'
 import NotebookPanel from './NotebookPanel';
 import PagePanel from './PagePanel';
 import EditorPanel from './EditorPanel';
-import Login from './login';
-
-import { BrowserRouter,Route } from 'react-router-dom'
+import {connect} from 'react-redux';
+import {Redirect} from 'react-router-dom';
+import firebase  from '../util/fb';
+import {ACTION} from '../util/constants';
 
 class App extends React.Component{
 
+    componentDidMount(){
+        this.unsubscrib = firebase.auth().onAuthStateChanged( (user) => {
+            if (!user) {
+                this.props.dispatch({type: ACTION.DETECT_LOGGED_OUT})
+            }
+        });
+    }
+
+    componentWillUnmount () {
+        this.unsubscrib();
+    }
+
     render(){
+        if(!this.props.currentUser){
+            console.log('login redirect');
+            return (
+                <Redirect to="/login"/>
+            )
+        }
+
         return (
             <div>
                 <FixedMenu />
@@ -30,15 +50,11 @@ class App extends React.Component{
     }
 }
 
-const AppLogin = () => (
-    <BrowserRouter>
-        <div>
-            <Route exact path="/" component={Login}/>
-            <Route exact path="/edit" component={App}/>
-        </div>
-    </BrowserRouter>
-);
+const mapSateToProps = (state)=> {
+    return {
+        currentUser: state.currentUser
+    }
+};
 
+export default connect(mapSateToProps)(App)
 
-
-export default AppLogin;

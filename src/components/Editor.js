@@ -43,8 +43,6 @@ class Editor extends React.Component {
         this.props.saveNotes(this.quillRef.getContents(), this.props.currentPageId);
     };
 
-
-
     render() {
         return (
             <div>
