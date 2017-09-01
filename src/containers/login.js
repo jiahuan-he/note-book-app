@@ -1,8 +1,9 @@
 import React from 'react';
 import { Button, Form, Segment, Input} from 'semantic-ui-react';
 import {Redirect} from 'react-router-dom';
-import axios from 'axios';
-import {login, signUp, onLoginStateChange} from '../util/fb';
+import { signUp} from '../util/fb';
+import { connect } from 'react-redux';
+import { loginAction } from '../actions/actionCreators';
 
 
 
@@ -20,20 +21,6 @@ class Login extends React.Component {
             { redirectToReferrer: false }
         ;
     }
-
-    tempLogin = () => {
-        axios.post('http://node-book-app-server-geoffreyhe.c9users.io/', {
-            firstName: 'Fred',
-            lastName: 'Flintstone'
-        })
-            .then(function (response) {
-                console.log(response);
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-    };
-
 
 
 
@@ -67,18 +54,23 @@ class Login extends React.Component {
                     </Form.Field>
                 </Segment>
                 <Segment>
-                    <Button onClick={this.tempLogin} type='submit'>Login</Button>
+                    <Button onClick={() => this.props.dispatch(loginAction('tempemail@gmail.com', '123456'))}
+                            type='submit'>Login
+                    </Button>
                     <Button onClick={() => {signUp(
                         'tempemail@gmail.com',
                         '123456',
                         ( error )=>{
                             console.log(error.code + error.message);
                         }
-                    )}} type='submit'>Signup</Button>
+                    )}}
+                            type='submit'>Signup
+                    </Button>
                 </Segment>
             </Segment.Group>
         </Form>)
     }
 }
 
-export default Login
+
+export default connect()(Login);

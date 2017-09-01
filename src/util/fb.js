@@ -23,10 +23,6 @@ export const login = (email, password, onError) => {
     );
 };
 
-function a (user) {
-
-}
-
 export const onLoginStateChange = ( onChange )=> {
 
     firebase.auth().onAuthStateChanged(

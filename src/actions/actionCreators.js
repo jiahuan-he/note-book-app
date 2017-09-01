@@ -1,5 +1,6 @@
 import {ACTION} from '../util/constants';
 import {currentDateToString} from '../util/util';
+import {login, onLoginStateChange, signUp} from '../util/fb';
 
 export const addNotebookAction = (title)=>{
     return { type: ACTION.NOTEBOOK_ADD,
@@ -58,5 +59,33 @@ export const saveNoteAction = (notes, currentPageId) => {
     return {
         type: ACTION.NOTES_SAVE_NOTE,
         payload: {targetPageId: currentPageId, note: notes}
+    }
+};
+
+export const loginAction = (email, password) => {
+
+    return (dispatch) => {
+        dispatch({
+                type: ACTION.LOGIN_START
+            }
+        );
+
+        login( email, password, (error) => dispatch({
+            type: ACTION.LOGIN_ERROR,
+            payload: {error: error}
+        }));
+
+        onLoginStateChange( ( user )=> {
+            if (user){
+                dispatch(
+                    {
+                        type: ACTION.LOGIN_SUCCESS,
+                        payload: {
+                            email: user.email
+                        }
+                    }
+                )
+            }
+        })
     }
 };
