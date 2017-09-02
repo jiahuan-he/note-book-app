@@ -29,9 +29,17 @@ const mapDispatchToProps = dispatch => {
     }
 };
 
+// workaround: clear editor panel when current page is deleted
+const getCurrentPageId = ( currentPageId, pages)=>{
+    if(pages[currentPageId]){
+        return currentPageId;
+    }
+    return "0";
+};
+
 const mapStateToProps = (state) => {
     return {
-        currentPageId : state.currentPageId,
+        currentPageId : getCurrentPageId(state.currentPageId, state.pages),
     }
 };
 

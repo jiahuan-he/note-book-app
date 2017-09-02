@@ -83,8 +83,6 @@ const getCurrentDelta = (currentPageId, notes, pages)=> {
         return null;
     }
 
-    // if(!pages[currentPageId]){}
-
     let delta = null;
     Object.keys(notes).forEach( (key)=> {
         if(key === currentPageId){
