@@ -36,6 +36,10 @@ export const logout = ( then, onError ) => {
         .catch( (error) => onError(error));
 };
 
+export const getCurrentUser = () => {
+    return firebase.auth().currentUser;
+};
+
 export default firebase;
 
 

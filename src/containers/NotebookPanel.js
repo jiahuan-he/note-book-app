@@ -9,7 +9,8 @@ import {
     editNotebookAction,
     deleteNotebookAction,
     addNotebookAction,
-    selectNotebookAction} from '../actions/actionCreators';
+    selectNotebookAction,
+    asyncAddNotebookAction} from '../actions/actionCreators';
 import {ACTION} from "../util/constants";
 import PropTypes from 'prop-types';
 
@@ -34,7 +35,8 @@ class NotebookPanel extends React.Component{
 
         switch (actionType){
             case ACTION.NOTEBOOK_ADD:
-                this.props.addNotebook(this.state.inputValue);
+                // this.props.addNotebook(this.state.inputValue);
+                this.props.aysncAddNotebook(this.state.inputValue);
                 break;
             case ACTION.NOTEBOOK_EDIT:
                 const data = { title: this.state.inputValue};
@@ -129,6 +131,9 @@ const mapDispatchToProps = dispatch => {
         },
         editNotebook: (editingNotebookId, data) => {
             dispatch(editNotebookAction(editingNotebookId, data));
+        },
+        aysncAddNotebook: (title) => {
+            dispatch(asyncAddNotebookAction(title))
         }
     }
 };

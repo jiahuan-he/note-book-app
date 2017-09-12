@@ -1,6 +1,7 @@
 import {ACTION} from '../util/constants';
 import {currentDateToString} from '../util/util';
-import {logout, login, signUp} from '../util/fb';
+import {logout, login, signUp, getCurrentUser} from '../util/fb';
+import axios from 'axios';
 
 export const addNotebookAction = (title)=>{
     return {
@@ -10,8 +11,35 @@ export const addNotebookAction = (title)=>{
                 title: title,
                 createDate : new Date(),
                 notebookId: currentDateToString(),
-                pageCount : 0,
             }
+    }
+};
+
+export const asyncAddNotebookAction = (title) => {
+    return (dispatch) => {
+        dispatch({
+            type: ACTION.NOTEBOOK_ADD_START
+        });
+
+        axios.post('http://localhost:3001/notebooks', {
+                uid: getCurrentUser().uid,
+                title: title,
+                createDate : new Date(),
+                notebookId: currentDateToString(),
+            }
+        )
+            .then((response) =>{
+                dispatch({
+                    type: ACTION.NOTEBOOK_ADD_SUCCESS,
+                    payload: response.data
+                })
+            })
+            .catch((error) =>{
+                dispatch({
+                    type: ACTION.NOTEBOOK_ADD_ERROR,
+                    payload: error
+                })
+            });
     }
 };
 

@@ -2,9 +2,9 @@ import {ACTION} from "../util/constants";
 
 export const notebooks = (state = {}, action) => {
     switch (action.type){
-        case ACTION.NOTEBOOK_ADD:
-            const newNotebook = {[action.payload.notebookId]: action.payload};
-            return {...state,  ...newNotebook};
+        // case ACTION.NOTEBOOK_ADD:
+            // const newNotebook = {[action.payload.notebookId]: action.payload};
+            // return {...state,  ...newNotebook};
 
         case ACTION.NOTEBOOK_DELETE:
 
@@ -35,6 +35,17 @@ export const notebooks = (state = {}, action) => {
                 console.log ( 'ERROR! NOTEBOOK REDUCER, PAGE ADD');
             }
             return {...state, [notebookId]: {...targetNotebook, pages: targetNotebook.pages.concat(pageId)}};
+
+        case ACTION.NOTEBOOK_ADD_START:
+            return state;
+
+        case ACTION.NOTEBOOK_ADD_SUCCESS:
+            const newNotebook = {[action.payload.notebookId]: action.payload};
+            return {...state,  ...newNotebook};
+
+        case ACTION.NOTEBOOK_ADD_ERROR:
+            console.log(action.payload);
+            return state;
 
         default:
             return state;

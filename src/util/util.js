@@ -10,7 +10,12 @@ export const currentDateToString= ()=> {
     + date.getMilliseconds().toString())
 };
 
+// export const formatDate = (date) => {
+//     return date.getDate()+'-'+ monthNames[date.getMonth()] +'-'+date.getFullYear();
+// };
+
+// temp
 export const formatDate = (date) => {
-    return date.getDate()+'-'+ monthNames[date.getMonth()] +'-'+date.getFullYear();
-}
+    return date;
+};
 
