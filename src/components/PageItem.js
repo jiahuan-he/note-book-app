@@ -17,9 +17,6 @@ const PageItem = ({title, createDate, onClick})=> {
                     <Card.Description>Daniel is a comedian living in Nashville.</Card.Description>
                 </Card.Content>
             </Card>
-
-
-
     )
 
 };

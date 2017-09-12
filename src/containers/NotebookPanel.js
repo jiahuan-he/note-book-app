@@ -82,7 +82,7 @@ class NotebookPanel extends React.Component{
                 key={id}
                 title= {title}
                 createDate= {createDate}
-                pageCount = {notebook.pageCount}
+                pageCount = {notebook.pages ? notebook.pages.length : 0}
                 />
             )
         }

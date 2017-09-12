@@ -27,7 +27,7 @@ export const notebooks = (state = {}, action) => {
         case ACTION.PAGE_ADD:
             const {notebookId, pageId} = action.payload;
             const targetNotebook =  state[notebookId];
-            targetNotebook.pageCount ++;
+            // targetNotebook.pageCount ++;
             if( !targetNotebook.pages){
                 targetNotebook.pages = [];
             }

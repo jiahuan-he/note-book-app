@@ -1,9 +1,10 @@
 import {ACTION} from '../util/constants';
 import {currentDateToString} from '../util/util';
-import {logout, login, onLoginStateChange, signUp} from '../util/fb';
+import {logout, login, signUp} from '../util/fb';
 
 export const addNotebookAction = (title)=>{
-    return { type: ACTION.NOTEBOOK_ADD,
+    return {
+        type: ACTION.NOTEBOOK_ADD,
         payload:
             {
                 title: title,
