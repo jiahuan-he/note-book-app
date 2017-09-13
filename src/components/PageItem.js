@@ -9,7 +9,8 @@ const PageItem = ({title, createDate, onClick})=> {
                 <Card.Content onClick = { onClick }>
                     <Card.Header>{title}</Card.Header>
                     <Card.Meta>
-                        {createDate.getHours() +':'+createDate.getMinutes()+'  '+formatDate(createDate)}
+                        {/*{createDate.getHours() +':'+createDate.getMinutes()+'  '+formatDate(createDate)}*/}
+                        {createDate}
                     </Card.Meta>
                     <Card.Meta>
                         Words: 100

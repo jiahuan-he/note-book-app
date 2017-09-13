@@ -4,7 +4,7 @@ import { Grid, List,Button, Modal, Input, Header} from 'semantic-ui-react'
 import {ButtonTop} from './PanelComponents'
 import {TYPE_ITEM} from '../util/constants';
 import { connect } from 'react-redux'
-import {selectPageAction , addPageAction} from '../actions/actionCreators';
+import {selectPageAction , asyncAddPageAction} from '../actions/actionCreators';
 import PropTypes from 'prop-types';
 
 
@@ -32,7 +32,7 @@ class PagePanel extends React.Component{
     handleDone = ()=>{
         // params: notebookId;
         //         data{ title: }
-        this.props.addPage(this.props.currentNotebookId, {title: this.state.inputValue});
+        this.props.addPage(this.props.currentNotebookId, this.state.inputValue);
         this.setState({modalOpen: false, inputValue: ''})
     };
 
@@ -106,7 +106,7 @@ const getCurrentPages = (currentNotebookId, notebooks, pages)=> {
 
 const mapDispatchToProps = dispatch => {
     return {
-        addPage: (currentNotebookId, title) => dispatch(addPageAction(currentNotebookId, title)),
+        addPage: (currentNotebookId, title) => dispatch(asyncAddPageAction(currentNotebookId, title)),
         selectPage: (pageId) => dispatch(selectPageAction(pageId)),
     }
 };

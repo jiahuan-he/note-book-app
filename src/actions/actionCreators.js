@@ -3,17 +3,17 @@ import {currentDateToString} from '../util/util';
 import {logout, login, signUp, getCurrentUser} from '../util/fb';
 import axios from 'axios';
 
-export const addNotebookAction = (title)=>{
-    return {
-        type: ACTION.NOTEBOOK_ADD,
-        payload:
-            {
-                title: title,
-                createDate : new Date(),
-                notebookId: currentDateToString(),
-            }
-    }
-};
+// export const addNotebookAction = (title)=>{
+//     return {
+//         type: ACTION.NOTEBOOK_ADD,
+//         payload:
+//             {
+//                 title: title,
+//                 createDate : new Date(),
+//                 notebookId: currentDateToString(),
+//             }
+//     }
+// };
 
 export const asyncAddNotebookAction = (title) => {
     return (dispatch) => {
@@ -42,19 +42,50 @@ export const asyncAddNotebookAction = (title) => {
             });
     }
 };
+//
+// export const addPageAction = (currentNotebookId, title)=> {
+//     return { type: ACTION.PAGE_ADD,
+//              payload:
+//                  {
+//                      title: title,
+//                      createDate : new Date(),
+//                      pageId: currentDateToString(),
+//                      notebookId: currentNotebookId,
+//                  }
+//     }
+// };
+//
 
-export const addPageAction = (currentNotebookId, data)=> {
-    return { type: ACTION.PAGE_ADD,
-             payload:
-                 {
-                     title: data.title,
-                     createDate : new Date(),
-                     pageId: currentDateToString(),
-                     notebookId: currentNotebookId,
-                     editor: null,
-                 }
+export const asyncAddPageAction = (currentNotebookId, title) => {
+    return (dispatch) => {
+        dispatch({
+            type: ACTION.PAGE_ADD_START
+        });
+
+        axios.post('http://localhost:3001/pages', {
+                uid: getCurrentUser().uid,
+                title: title,
+                createDate : new Date(),
+                pageId: currentDateToString(),
+                notebookId: currentNotebookId
+            }
+        )
+            .then((response) =>{
+                dispatch({
+                    type: ACTION.PAGE_ADD_SUCCESS,
+                    payload: response.data
+                })
+            })
+            .catch((error) =>{
+                dispatch({
+                    type: ACTION.PAGE_ADD_ERROR,
+                    payload: error
+                })
+            });
     }
 };
+
+
 
 export const selectNotebookAction = (id)=> {
     return {

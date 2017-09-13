@@ -8,7 +8,7 @@ import { connect } from 'react-redux'
 import {
     editNotebookAction,
     deleteNotebookAction,
-    addNotebookAction,
+    // addNotebookAction,
     selectNotebookAction,
     asyncAddNotebookAction} from '../actions/actionCreators';
 import {ACTION} from "../util/constants";
@@ -120,9 +120,9 @@ class NotebookPanel extends React.Component{
 
 const mapDispatchToProps = dispatch => {
     return {
-        addNotebook: (title) => {
-            dispatch(addNotebookAction(title));
-        },
+        // addNotebook: (title) => {
+        //     dispatch(addNotebookAction(title));
+        // },
         selectNotebook: (id) => {
             dispatch(selectNotebookAction(id));
         },

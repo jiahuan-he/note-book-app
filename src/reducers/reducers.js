@@ -24,7 +24,22 @@ export const notebooks = (state = {}, action) => {
                }
             });
             return newState;
-        case ACTION.PAGE_ADD:
+        // case ACTION.PAGE_ADD:
+        //     const {notebookId, pageId} = action.payload;
+        //     const targetNotebook =  state[notebookId];
+        //     // targetNotebook.pageCount ++;
+        //     if( !targetNotebook.pages){
+        //         targetNotebook.pages = [];
+        //     }
+        //     if(!state[action.payload.notebookId]){
+        //         console.log ( 'ERROR! NOTEBOOK REDUCER, PAGE ADD');
+        //     }
+        //     return {...state, [notebookId]: {...targetNotebook, pages: targetNotebook.pages.concat(pageId)}};
+
+        case ACTION.PAGE_ADD_START:
+            return state;
+
+        case ACTION.PAGE_ADD_SUCCESS:
             const {notebookId, pageId} = action.payload;
             const targetNotebook =  state[notebookId];
             // targetNotebook.pageCount ++;
@@ -47,6 +62,18 @@ export const notebooks = (state = {}, action) => {
             console.log(action.payload);
             return state;
 
+        case ACTION.NOTEBOOK_DELETE_START:
+            return state;
+
+        // case ACTION.NOTEBOOK_DELETE_SUCCESS:
+            // const newNotebook = {[action.payload.notebookId]: action.payload};
+            // return {...state,  ...newNotebook};
+
+        // case ACTION.NOTEBOOK_DELETE_ERROR:
+            // console.log(action.payload);
+            // return state;
+
+
         default:
             return state;
     }
@@ -54,7 +81,11 @@ export const notebooks = (state = {}, action) => {
 
 export const pages = (state= {}, action) => {
     switch (action.type){
-        case ACTION.PAGE_ADD:
+        // case ACTION.PAGE_ADD:
+        //     const newPage = { [action.payload.pageId]: action.payload};
+        //     return {...state, ...newPage};
+
+        case ACTION.PAGE_ADD_SUCCESS:
             const newPage = { [action.payload.pageId]: action.payload};
             return {...state, ...newPage};
 
