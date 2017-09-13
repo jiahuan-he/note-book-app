@@ -85,6 +85,31 @@ export const asyncAddPageAction = (currentNotebookId, title) => {
     }
 };
 
+export const asyncSaveNoteAction = (notes, currentPageId) => {
+    return (dispatch) => {
+        dispatch({
+            type: ACTION.NOTES_SAVE_NOTE_START,
+        });
+
+        axios.post('http://localhost:3001/notes', {
+            uid: getCurrentUser().uid,
+            targetPageId: currentPageId,
+            note: notes
+        })
+            .then( (response) => {
+                dispatch({
+                    type: ACTION.NOTES_SAVE_NOTE_SUCCESS,
+                    payload: response.data
+                })
+        })
+            .catch( (error) => {
+                dispatch( {
+                    type: ACTION.NOTES_SAVE_NOTE_ERROR,
+                    payload: error
+                })
+            })
+    }
+};
 
 
 export const selectNotebookAction = (id)=> {
@@ -121,6 +146,8 @@ export const saveNoteAction = (notes, currentPageId) => {
         payload: {targetPageId: currentPageId, note: notes}
     }
 };
+
+
 
 export const loginAction = (email, password) => {
 

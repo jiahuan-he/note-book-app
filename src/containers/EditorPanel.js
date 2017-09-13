@@ -1,7 +1,7 @@
 import React from 'react';
 import Editor from '../components/Editor';
 import { Grid } from 'semantic-ui-react';
-import {saveNoteAction} from '../actions/actionCreators';
+import {asyncSaveNoteAction} from '../actions/actionCreators';
 
 import {connect} from 'react-redux';
 
@@ -24,7 +24,7 @@ class EditorPanel extends React.Component{
 const mapDispatchToProps = dispatch => {
     return {
         saveNotes: (notes, currentPageId) => {
-            dispatch(saveNoteAction(notes, currentPageId));
+            dispatch(asyncSaveNoteAction(notes, currentPageId));
         },
     }
 };
