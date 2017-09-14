@@ -32,7 +32,22 @@ export const notebooks = (state = {}, action) => {
                }
             });
             return newState;
-        // case ACTION.PAGE_ADD:
+        case ACTION.PAGE_ADD_SUCCESS:
+            const updatedPages = action.payload.updatedNotebook.pages;
+            const notebookId = action.payload.notebookId;
+            const targetNotebook =  state[notebookId];
+            if( !targetNotebook.pages){
+                targetNotebook.pages = [];
+            }
+            if(!state[action.payload.notebookId]){
+                console.log ( 'ERROR! NOTEBOOK REDUCER, PAGE ADD');
+            }
+            return {...state, [notebookId]: {...targetNotebook, pages: updatedPages}};
+
+        case ACTION.PAGE_ADD_START:
+            return state;
+
+        // case ACTION.PAGE_ADD_SUCCESS:
         //     const {notebookId, pageId} = action.payload;
         //     const targetNotebook =  state[notebookId];
         //     // targetNotebook.pageCount ++;
@@ -43,21 +58,6 @@ export const notebooks = (state = {}, action) => {
         //         console.log ( 'ERROR! NOTEBOOK REDUCER, PAGE ADD');
         //     }
         //     return {...state, [notebookId]: {...targetNotebook, pages: targetNotebook.pages.concat(pageId)}};
-
-        case ACTION.PAGE_ADD_START:
-            return state;
-
-        case ACTION.PAGE_ADD_SUCCESS:
-            const {notebookId, pageId} = action.payload;
-            const targetNotebook =  state[notebookId];
-            // targetNotebook.pageCount ++;
-            if( !targetNotebook.pages){
-                targetNotebook.pages = [];
-            }
-            if(!state[action.payload.notebookId]){
-                console.log ( 'ERROR! NOTEBOOK REDUCER, PAGE ADD');
-            }
-            return {...state, [notebookId]: {...targetNotebook, pages: targetNotebook.pages.concat(pageId)}};
 
         case ACTION.NOTEBOOK_ADD_START:
             return state;
@@ -96,6 +96,18 @@ export const pages = (state= {}, action) => {
         case ACTION.PAGE_ADD_SUCCESS:
             const newPage = { [action.payload.pageId]: action.payload};
             return {...state, ...newPage};
+
+        case ACTION.FETCH_PAGES_START:
+            return state;
+
+        case ACTION.FETCH_PAGES_SUCCESS:
+            const fetchedPages = {};
+            const pages = action.payload;
+            pages.forEach( (page) => {
+                const {createDate, notebookId, pageId, title} = page;
+                fetchedPages[pageId] = {createDate, notebookId, pageId, title};
+            });
+            return fetchedPages;
 
         case ACTION.NOTEBOOK_DELETE:
             const notebookId = action.payload.notebookId;

@@ -4,8 +4,9 @@ import { Grid, List,Button, Modal, Input, Header} from 'semantic-ui-react'
 import {ButtonTop} from './PanelComponents'
 import {TYPE_ITEM} from '../util/constants';
 import { connect } from 'react-redux'
-import {selectPageAction , asyncAddPageAction} from '../actions/actionCreators';
+import {selectPageAction , asyncAddPageAction, fetchPagesAction} from '../actions/actionCreators';
 import PropTypes from 'prop-types';
+import {getCurrentUser} from "../util/fb";
 
 
 class PagePanel extends React.Component{
@@ -33,6 +34,11 @@ class PagePanel extends React.Component{
     handleCancel = ()=> {
         this.setState({modalOpen: false})
     };
+
+    componentDidMount(){
+        const uid = getCurrentUser().uid;
+        this.props.fetchPagesFromServer(uid);
+    }
 
     render(){
 
@@ -82,6 +88,19 @@ const getCurrentNotebook = (id, notebooks) => {
     return currentNotebook[0];
 };
 
+
+const mapDispatchToProps = dispatch => {
+    return {
+        addPage: (currentNotebookId, title) => dispatch(asyncAddPageAction(currentNotebookId, title)),
+        selectPage: (pageId) => dispatch(selectPageAction(pageId)),
+
+        fetchPagesFromServer: (uid)=> {
+            dispatch(fetchPagesAction(uid));
+        }
+    }
+};
+
+
 const getCurrentPages = (currentNotebookId, notebooks, pages)=> {
     const currentNotebook = getCurrentNotebook(currentNotebookId, notebooks);
     if (!currentNotebook){
@@ -92,17 +111,8 @@ const getCurrentPages = (currentNotebookId, notebooks, pages)=> {
         const pageIds = currentNotebook.pages;
         currentPages = pageIds.map( (pageId)=> pages[pageId]);
     }
-    console.log(currentPages);
     return currentPages;
 
-};
-
-
-const mapDispatchToProps = dispatch => {
-    return {
-        addPage: (currentNotebookId, title) => dispatch(asyncAddPageAction(currentNotebookId, title)),
-        selectPage: (pageId) => dispatch(selectPageAction(pageId)),
-    }
 };
 
 
