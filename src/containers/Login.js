@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Form, Segment, Input} from 'semantic-ui-react';
 import {Redirect} from 'react-router-dom';
 import { connect } from 'react-redux';
-import { loginAction, signUpAction} from '../actions/actionCreators';
+import { loginAction, signUpAction, detectLoggedInAction} from '../actions/actionCreators';
 import firebase from '../util/fb';
 import {ACTION} from '../util/constants';
 
@@ -30,7 +30,7 @@ class Login extends React.Component {
     componentDidMount(){
         this.unsubscrib = firebase.auth().onAuthStateChanged( (user) => {
             if (user) {
-                this.props.dispatch({ type: ACTION.DETECT_LOGGED_IN, payload: {user: user}})
+                this.props.onDetectLoggedIn(user);
             }
             else {
                 console.log(user);
@@ -73,10 +73,10 @@ class Login extends React.Component {
                     </Form.Field>
                 </Segment>
                 <Segment>
-                    <Button onClick={() => this.props.dispatch(loginAction(this.state.email, this.state.password))}
+                    <Button onClick={() => this.props.login(this.state.email, this.state.password)}
                             type='submit'>Login
                     </Button>
-                    <Button onClick={() => this.props.dispatch(signUpAction(this.state.email, this.state.password))}
+                    <Button onClick={() => this.props.signUp(this.state.email, this.state.password)}
                             type='submit'>Signup
                     </Button>
                 </Segment>
@@ -85,6 +85,20 @@ class Login extends React.Component {
     }
 }
 
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onDetectLoggedIn: (user) => {
+            dispatch(detectLoggedInAction(user))
+        },
+        login: (email, password) => {
+            dispatch(loginAction(email, password));
+        },
+        signUp: (email, password) => {
+            dispatch(signUpAction(email, password));
+        }
+    }
+};
 
 const mapStateToProps = (state) => {
     return {
@@ -95,4 +109,4 @@ const mapStateToProps = (state) => {
 
 
 
-export default connect(mapStateToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

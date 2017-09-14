@@ -40,7 +40,7 @@ class Editor extends React.Component {
         if(this.props.currentPageId === 0){
             return;
         }
-        this.props.saveNotes(this.quillRef.getContents(), this.props.currentPageId);
+        this.props.saveNote(this.quillRef.getContents(), this.props.currentPageId);
     };
 
     render() {

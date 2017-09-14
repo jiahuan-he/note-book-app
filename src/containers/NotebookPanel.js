@@ -8,11 +8,12 @@ import { connect } from 'react-redux'
 import {
     editNotebookAction,
     deleteNotebookAction,
-    // addNotebookAction,
     selectNotebookAction,
-    asyncAddNotebookAction} from '../actions/actionCreators';
+    asyncAddNotebookAction,
+    fetchNotebooksAction} from '../actions/actionCreators';
 import {ACTION} from "../util/constants";
 import PropTypes from 'prop-types';
+import {getCurrentUser} from '../util/fb';
 
 
 class NotebookPanel extends React.Component{
@@ -67,6 +68,10 @@ class NotebookPanel extends React.Component{
         this.props.selectNotebook(id);
     };
 
+    componentDidMount(){
+        const uid = getCurrentUser().uid;
+        this.props.fetchNotebookFromServer(uid);
+    }
 
     render(){
 
@@ -134,13 +139,16 @@ const mapDispatchToProps = dispatch => {
         },
         aysncAddNotebook: (title) => {
             dispatch(asyncAddNotebookAction(title))
+        },
+
+        fetchNotebookFromServer: (uid)=> {
+            dispatch(fetchNotebooksAction(uid));
         }
     }
 };
 
 const mapStateToProps = ( state ) => {
     return {
-
         notebooks: state.notebooks,
         //TODO change current notebook's appearance
         currentNotebookId: state.currentNotebookId,

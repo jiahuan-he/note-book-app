@@ -5,6 +5,14 @@ export const notebooks = (state = {}, action) => {
         // case ACTION.NOTEBOOK_ADD:
             // const newNotebook = {[action.payload.notebookId]: action.payload};
             // return {...state,  ...newNotebook};
+        case ACTION.FETCH_NOTEBOOKS_SUCCESS:
+            const notebooks = action.payload;
+            const fetchedNotebooks = {};
+            notebooks.forEach( (notebook) => {
+                const {title, createDate, notebookId, pages} = notebook;
+                fetchedNotebooks[notebook.notebookId] = {notebookId, title, createDate, pages}
+            });
+            return fetchedNotebooks;
 
         case ACTION.NOTEBOOK_DELETE:
 
@@ -143,14 +151,14 @@ export const notes = (state = {}, action) => {
         //     const newNote = { [action.payload.targetPageId]: action.payload};
         //     return {...state, ...newNote};
 
-        case ACTION.NOTES_SAVE_NOTE_START:
+        case ACTION.NOTE_SAVE_START:
             return state;
 
-        case ACTION.NOTES_SAVE_NOTE_SUCCESS:
+        case ACTION.NOTE_SAVE_SUCCESS:
             const newNote = { [action.payload.targetPageId]: action.payload};
             return {...state, ...newNote};
 
-        case ACTION.NOTES_SAVE_NOTE_ERROR:
+        case ACTION.NOTE_SAVE_ERROR:
             return state;
 
         default:
@@ -171,9 +179,9 @@ export const currentUser = ( state = null, action) => {
 
         case ACTION.LOGOUT_SUCCESS:
             return null;
-        case "DETECT_LOGGED_IN":
+        case ACTION.DETECT_LOGGED_IN:
             return action.payload.user;
-        case "DETECT_LOGGED_OUT":
+        case ACTION.DETECT_LOGGED_OUT:
             return null;
 
         default:

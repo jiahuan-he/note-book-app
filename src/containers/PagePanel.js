@@ -10,12 +10,6 @@ import PropTypes from 'prop-types';
 
 class PagePanel extends React.Component{
 
-    //TODO
-    // Create date
-    // Delete
-
-    // props:
-    //      function: addPage()
 
     constructor(props) {
         super(props);
@@ -98,7 +92,7 @@ const getCurrentPages = (currentNotebookId, notebooks, pages)=> {
         const pageIds = currentNotebook.pages;
         currentPages = pageIds.map( (pageId)=> pages[pageId]);
     }
-    console.log(currentPages)
+    console.log(currentPages);
     return currentPages;
 
 };

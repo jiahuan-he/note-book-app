@@ -1,7 +1,7 @@
 import React from 'react';
 import FixedMenu from  '../components/Header'
 import { Grid } from 'semantic-ui-react'
-
+import {detectLoggedOutAction} from "../actions/actionCreators";
 import NotebookPanel from './NotebookPanel';
 import PagePanel from './PagePanel';
 import EditorPanel from './EditorPanel';
@@ -15,7 +15,7 @@ class App extends React.Component{
     componentDidMount(){
         this.unsubscrib = firebase.auth().onAuthStateChanged( (user) => {
             if (!user) {
-                this.props.dispatch({type: ACTION.DETECT_LOGGED_OUT})
+                this.props.onDetectLoggedOut();
             }
         });
     }
@@ -49,11 +49,21 @@ class App extends React.Component{
     }
 }
 
+
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onDetectLoggedOut: () => {
+            dispatch(detectLoggedOutAction());
+        }
+    }
+};
+
 const mapSateToProps = (state)=> {
     return {
         currentUser: state.currentUser
     }
 };
 
-export default connect(mapSateToProps)(App)
+export default connect(mapSateToProps, mapDispatchToProps)(App)
 

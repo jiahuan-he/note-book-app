@@ -85,26 +85,26 @@ export const asyncAddPageAction = (currentNotebookId, title) => {
     }
 };
 
-export const asyncSaveNoteAction = (notes, currentPageId) => {
+export const asyncSaveNoteAction = (note, currentPageId) => {
     return (dispatch) => {
         dispatch({
-            type: ACTION.NOTES_SAVE_NOTE_START,
+            type: ACTION.NOTE_SAVE_START,
         });
 
         axios.post('http://localhost:3001/notes', {
             uid: getCurrentUser().uid,
             targetPageId: currentPageId,
-            note: notes
+            note: note
         })
             .then( (response) => {
                 dispatch({
-                    type: ACTION.NOTES_SAVE_NOTE_SUCCESS,
+                    type: ACTION.NOTE_SAVE_SUCCESS,
                     payload: response.data
                 })
         })
             .catch( (error) => {
                 dispatch( {
-                    type: ACTION.NOTES_SAVE_NOTE_ERROR,
+                    type: ACTION.NOTE_SAVE_ERROR,
                     payload: error
                 })
             })
@@ -140,12 +140,12 @@ export const selectPageAction = (pageId) => {
     }
 };
 
-export const saveNoteAction = (notes, currentPageId) => {
-    return {
-        type: ACTION.NOTES_SAVE_NOTE,
-        payload: {targetPageId: currentPageId, note: notes}
-    }
-};
+// export const saveNoteAction = (notes, currentPageId) => {
+//     return {
+//         type: ACTION.NOTES_SAVE_NOTE,
+//         payload: {targetPageId: currentPageId, note: notes}
+//     }
+// };
 
 
 
@@ -230,5 +230,65 @@ export const logoutAction = () =>{
                 )
             }
         )
+    }
+};
+
+export const detectLoggedInAction = (user) => {
+    return {
+        type: ACTION.DETECT_LOGGED_IN,
+        payload: {user: user}
+    };
+};
+
+export const detectLoggedOutAction = () => {
+    return {
+        type: ACTION.DETECT_LOGGED_OUT
+    };
+};
+
+export const fetchNotebooksAction = (uid) => {
+    return (dispatch) => {
+        dispatch({type: ACTION.FETCH_NOTEBOOKS_START});
+        axios.get('http://localhost:3001/notebooks?uid='+uid)
+            .then( (response)=>{
+                dispatch({
+                    type:ACTION.FETCH_NOTEBOOKS_SUCCESS,
+                    payload: response.data
+                })
+            })
+            .catch(
+                (error)=> {
+                    dispatch(
+                        {
+                            type: ACTION.FETCH_NOTEBOOKS_ERROR,
+                            payload: error
+                        }
+                    )
+                }
+            )
+    }
+};
+
+
+export const fetchPagesAction = (uid) => {
+    return (dispatch) => {
+        dispatch({type: ACTION.FETCH_PAGES_START});
+        axios.get('http://localhost:3001/pages?uid='+uid)
+            .then( (response)=>{
+                dispatch({
+                    type:ACTION.FETCH_PAGES_SUCCESS,
+                    payload: response.data
+                })
+            })
+            .catch(
+                (error)=> {
+                    dispatch(
+                        {
+                            type: ACTION.FETCH_PAGES_ERROR,
+                            payload: error
+                        }
+                    )
+                }
+            )
     }
 };

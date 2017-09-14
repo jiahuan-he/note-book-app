@@ -14,7 +14,7 @@ class EditorPanel extends React.Component{
                 {
                     this.props.currentPageId
                     && this.props.currentPageId!== '0'
-                    && <Editor currentPageId={this.props.currentPageId} saveNotes={this.props.saveNotes}/>
+                    && <Editor currentPageId={this.props.currentPageId} saveNote={this.props.saveNote}/>
                 }
             </Grid.Column>
         );
@@ -23,8 +23,8 @@ class EditorPanel extends React.Component{
 
 const mapDispatchToProps = dispatch => {
     return {
-        saveNotes: (notes, currentPageId) => {
-            dispatch(asyncSaveNoteAction(notes, currentPageId));
+        saveNote: (note, currentPageId) => {
+            dispatch(asyncSaveNoteAction(note, currentPageId));
         },
     }
 };
