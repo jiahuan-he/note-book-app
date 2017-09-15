@@ -292,3 +292,26 @@ export const fetchPagesAction = (uid) => {
             )
     }
 };
+
+export const fetchNotesFromServer = (uid) => {
+    return (dispatch) => {
+        dispatch({type: ACTION.FETCH_NOTES_START});
+        axios.get('http://localhost:3001/notes?uid='+uid)
+            .then( (response)=>{
+                dispatch({
+                    type:ACTION.FETCH_NOTES_SUCCESS,
+                    payload: response.data
+                })
+            })
+            .catch(
+                (error)=> {
+                    dispatch(
+                        {
+                            type: ACTION.FETCH_NOTES_ERROR,
+                            payload: error
+                        }
+                    )
+                }
+            )
+    }
+};

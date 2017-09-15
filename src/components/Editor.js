@@ -14,12 +14,12 @@ class Editor extends React.Component {
     }
 
     componentDidMount() {
+        this.setState( {text: this.props.currentDelta});
         this.attachQuillRefs();
 
     }
 
     componentWillReceiveProps(nextProps) {
-
         this.setState( {text: nextProps.currentDelta});
     }
 
@@ -44,13 +44,14 @@ class Editor extends React.Component {
     };
 
     render() {
+
         return (
             <div>
                 <ReadOnlyButton/>
                 <SaveEditorButton onClick = {this.handleSave}/>
                 <ReactQuill
                     style = { {height: '500px'}}
-                    value={this.state.text}
+                    value={ this.state.text }
                     ref={(el) => { this.reactQuillRef = el }}
                     modules = {{
                         toolbar: [
@@ -75,6 +76,7 @@ class Editor extends React.Component {
 
 
 const getCurrentDelta = (currentPageId, notes, pages)=> {
+
     if(currentPageId === 0 || !currentPageId || !notes ){
         return null;
     }

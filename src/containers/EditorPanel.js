@@ -1,12 +1,18 @@
 import React from 'react';
 import Editor from '../components/Editor';
 import { Grid } from 'semantic-ui-react';
-import {asyncSaveNoteAction} from '../actions/actionCreators';
-
+import {asyncSaveNoteAction, fetchNotesFromServer} from '../actions/actionCreators';
+import {getCurrentUser} from '../util/fb';
 import {connect} from 'react-redux';
 
 
 class EditorPanel extends React.Component{
+
+    componentDidMount(){
+        const uid = getCurrentUser().uid;
+        this.props.fetchNotesFromServer(uid);
+    }
+
 
     render(){
         return (
@@ -26,6 +32,9 @@ const mapDispatchToProps = dispatch => {
         saveNote: (note, currentPageId) => {
             dispatch(asyncSaveNoteAction(note, currentPageId));
         },
+        fetchNotesFromServer: (uid) => {
+            dispatch(fetchNotesFromServer(uid))
+        }
     }
 };
 

@@ -173,6 +173,15 @@ export const notes = (state = {}, action) => {
         case ACTION.NOTE_SAVE_ERROR:
             return state;
 
+        case ACTION.FETCH_NOTES_SUCCESS:
+            const notes = action.payload;
+            const fetchedNotes = {};
+            notes.forEach( (fetchedNote)=> {
+                const {targetPageId, note} = fetchedNote;
+                fetchedNotes[targetPageId] = {targetPageId, note};
+            });
+            return fetchedNotes;
+
         default:
             return state;
     }
@@ -201,9 +210,4 @@ export const currentUser = ( state = null, action) => {
     }
 
 };
-
-
-
-
-
 
