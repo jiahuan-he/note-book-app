@@ -21,11 +21,13 @@ export const notebooks = (state = {}, action) => {
             currentNotebookKeys.forEach( (key) => currentNotebooks[key] = state[key]);
             return currentNotebooks;
 
-        case ACTION.NOTEBOOK_EDIT:
+        case ACTION.NOTEBOOK_EDIT_SUCCESS:
             const newState = {};
+            const {title, ...rest} = action.payload.data;
             Object.keys(state).forEach((key)=>{
-               if (key === action.payload.notebookId){
-                   newState[key] = {...state[key], ...action.payload.data};
+               if (key === action.payload.data.notebookId){
+
+                   newState[key] = {...state[key], title};
                }
                else{
                    newState[key] = state[key];

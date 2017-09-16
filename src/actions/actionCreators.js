@@ -127,9 +127,32 @@ export const deleteNotebookAction = (id)=> {
 };
 
 export const editNotebookAction = (editingNotebookId, data)=> {
-    return {
-        type: ACTION.NOTEBOOK_EDIT,
-        payload: {notebookId: editingNotebookId, data: data},
+    // return {
+    //     type: ACTION.NOTEBOOK_EDIT,
+    //     payload: {notebookId: editingNotebookId, data: data},
+    // }
+
+    return (dispatch) => {
+        dispatch({type: ACTION.NOTEBOOK_EDIT_START});
+        axios.put("http://localhost:3001/notebooks",
+            {
+                uid: getCurrentUser().uid,
+                notebookId: editingNotebookId,
+                title: data.title
+            }
+        )
+            .then( (response) => {
+                dispatch({
+                    type: ACTION.NOTEBOOK_EDIT_SUCCESS,
+                    payload: response
+                })
+            })
+            .catch( (error) => {
+                dispatch({
+                    type: ACTION.NOTEBOOK_EDIT_ERROR,
+                    payload: error
+                })
+            })
     }
 };
 

@@ -7,6 +7,7 @@ import { connect } from 'react-redux'
 import {selectPageAction , asyncAddPageAction, fetchPagesAction} from '../actions/actionCreators';
 import PropTypes from 'prop-types';
 import {getCurrentUser} from "../util/fb";
+import {ACTION} from "../util/constants";
 
 
 class PagePanel extends React.Component{
@@ -16,7 +17,8 @@ class PagePanel extends React.Component{
         super(props);
         this.state = {
             modalOpen: false,
-            inputValue: ''
+            inputValue: '',
+            editingPageId: null,
         };
     }
 
@@ -25,10 +27,22 @@ class PagePanel extends React.Component{
     };
 
     handleDone = ()=>{
-        // params: notebookId;
-        //         data{ title: }
-        this.props.addPage(this.props.currentNotebookId, this.state.inputValue);
-        this.setState({modalOpen: false, inputValue: ''})
+        const actionType = this.state.editingPageId ? ACTION.PAGE_EDIT : ACTION.PAGE_ADD;
+
+        switch (actionType){
+            case ACTION.PAGE_ADD:
+                // this.props.addNotebook(this.state.inputValue);
+                this.props.addPage(this.props.currentNotebookId, this.state.inputValue);
+                break;
+            case ACTION.PAGE_EDIT:
+                const data = { title: this.state.inputValue};
+                this.props.editPage(this.state.editingPageId, data);
+                this.setState({editingPageId : null});
+                break;
+            default:
+                break;
+        }
+        this.setState( {modalOpen: false, inputValue: ''});
     };
 
     handleCancel = ()=> {
@@ -40,17 +54,31 @@ class PagePanel extends React.Component{
         this.props.fetchPagesFromServer(uid);
     }
 
+    openEditModal = (editingPage)=> {
+        console.log(editingPage);
+        this.setState({inputValue: editingPage.title, modalOpen: true});
+        this.setState ({editingPageId: editingPage.pageId});
+    };
+
     render(){
 
         const type = TYPE_ITEM.PAGE;
 
-        const pages = Object.values(this.props.pages).map( (page)=>
-                        (<PageItem key={page.pageId}
-                                   title= {page.title}
-                                   createDate= {page.createDate}
-                                   onClick = {() => this.props.selectPage(page.pageId) }
-                        />)
-        );
+        const pages = Object.values(this.props.pages).map( (page)=>{
+
+            const id = page.pageId;
+            const title = page.title;
+            const createDate = page.createDate;
+
+
+            return (<PageItem key={id}
+                       title= {title}
+                       createDate= {createDate}
+                       onClick = {() => this.props.selectPage(id)}
+                       onDeleteButtonClicked = {() => this.props.deletePage(id)}
+                       onEditButtonClicked = {() => this.openEditModal(page)}
+            />)
+        });
 
         return (
             <Grid.Column width={this.props.width}>
@@ -64,7 +92,9 @@ class PagePanel extends React.Component{
                         <Modal.Description>
                             <Input onChange={e => this.setState({inputValue: e.target.value}) }
                                    fluid
-                                   placeholder='Title'/>
+                                   placeholder='Title'
+                                   defaultValue = {this.state.inputValue}
+                            />
                             <Button onClick={ this.handleCancel }>Cancel</Button>
                             <Button disabled={ this.state.inputValue.trim().length === 0 }
                                     onClick={ this.handleDone } primary>Done</Button>
@@ -96,7 +126,9 @@ const mapDispatchToProps = dispatch => {
 
         fetchPagesFromServer: (uid)=> {
             dispatch(fetchPagesAction(uid));
-        }
+        },
+
+        deletePage: () => (null)
     }
 };
 

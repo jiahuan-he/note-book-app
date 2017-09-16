@@ -45,7 +45,6 @@ class NotebookPanel extends React.Component{
                 this.setState({editingNotebookId : null});
                 break;
             default:
-                console.log( " ERROR! in NotebookPanel.js, handleDone, NOTEBOOK EDIT" );
                 break;
         }
         this.setState( {modalOpen: false, inputValue: ''});
