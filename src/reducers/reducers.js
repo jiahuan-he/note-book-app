@@ -60,6 +60,16 @@ export const notebooks = (state = {}, action) => {
         //         console.log ( 'ERROR! NOTEBOOK REDUCER, PAGE ADD');
         //     }
         //     return {...state, [notebookId]: {...targetNotebook, pages: targetNotebook.pages.concat(pageId)}};
+        case ACTION.PAGE_DELETE_SUCCESS:
+            {
+                const {pageId, notebookId} = action.payload.data;
+                const newStateOnDelete = state;
+                const oldPages = state[notebookId].pages;
+                const newPages = oldPages.filter( (page) => page !== pageId);
+                newStateOnDelete[notebookId] = { ...state[notebookId], ...{pages: newPages}}
+                return newStateOnDelete;
+            }
+        break;
 
         case ACTION.NOTEBOOK_ADD_START:
             return state;
@@ -96,8 +106,20 @@ export const pages = (state= {}, action) => {
         //     return {...state, ...newPage};
 
         case ACTION.PAGE_ADD_SUCCESS:
-            const newPage = { [action.payload.pageId]: action.payload};
+
+            const {updatedNotebook, ...payload} = action.payload;
+            const newPage = { [action.payload.pageId]: payload};
             return {...state, ...newPage};
+
+        case ACTION.PAGE_DELETE_SUCCESS:
+            const keys = Object.keys(state);
+            const stateAfterDelete = {};
+            keys.forEach((key) => {
+                if(key !== action.payload.data.pageId){
+                    stateAfterDelete[key] = state[key];
+                }
+            });
+            return stateAfterDelete;
 
         case ACTION.FETCH_PAGES_START:
             return state;
@@ -164,7 +186,12 @@ export const currentPageId = (state = "0" , action)=>{
         case ACTION.PAGE_SELECT:
             return action.payload.pageId;
         case ACTION.NOTEBOOK_SELECT:
-            return 0;
+            return "0";
+        case ACTION.PAGE_DELETE_SUCCESS:
+            if(action.payload.data.pageId === state){
+                return "0";
+            }
+            return state;
         //     }
         //     return state;
         default:
@@ -197,6 +224,15 @@ export const notes = (state = {}, action) => {
                 fetchedNotes[targetPageId] = {targetPageId, note};
             });
             return fetchedNotes;
+        case ACTION.PAGE_DELETE_SUCCESS:
+            const keys = Object.keys(state);
+            const newState = {};
+            keys.forEach( (key) => {
+                if(key !== action.payload.data.pageId){
+                    newState[key] = state[key]
+                }
+            });
+            return newState;
 
         default:
             return state;

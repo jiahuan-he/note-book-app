@@ -128,6 +128,20 @@ export const deleteNotebookAction = (id)=> {
     }
 };
 
+export const deletePageAction = (pageId, notebookId) => {
+    const uid =  getCurrentUser().uid;
+    return (dispatch)=> {
+        dispatch({type: ACTION.PAGE_DELETE_START});
+        axios.delete(`http://localhost:3001/pages?uid=${uid}&pageId=${pageId}&notebookId=${notebookId}`)
+            .then((response) => {
+                dispatch({type: ACTION.PAGE_DELETE_SUCCESS, payload: response});
+            })
+            .catch ( (error) => {
+                dispatch( {type: ACTION.PAGE_DELETE_ERROR, palyload: error});
+            })
+    }
+};
+
 export const editNotebookAction = (editingNotebookId, data)=> {
     // return {
     //     type: ACTION.NOTEBOOK_EDIT,

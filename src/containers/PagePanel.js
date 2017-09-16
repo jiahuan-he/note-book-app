@@ -4,7 +4,7 @@ import { Grid, List,Button, Modal, Input, Header} from 'semantic-ui-react'
 import {ButtonTop} from './PanelComponents'
 import {TYPE_ITEM} from '../util/constants';
 import { connect } from 'react-redux'
-import {selectPageAction , asyncAddPageAction, fetchPagesAction, editPageAction} from '../actions/actionCreators';
+import {selectPageAction , asyncAddPageAction, fetchPagesAction, editPageAction, deletePageAction} from '../actions/actionCreators';
 import PropTypes from 'prop-types';
 import {getCurrentUser} from "../util/fb";
 import {ACTION} from "../util/constants";
@@ -67,6 +67,7 @@ class PagePanel extends React.Component{
         const pages = Object.values(this.props.pages).map( (page)=>{
 
             const id = page.pageId;
+            const notebookId = page.notebookId;
             const title = page.title;
             const createDate = page.createDate;
 
@@ -75,7 +76,7 @@ class PagePanel extends React.Component{
                        title= {title}
                        createDate= {createDate}
                        onClick = {() => this.props.selectPage(id)}
-                       onDeleteButtonClicked = {() => this.props.deletePage(id)}
+                       onDeleteButtonClicked = {() => this.props.deletePage(id, notebookId)}
                        onEditButtonClicked = {() => this.openEditModal(page)}
             />)
         });
@@ -130,7 +131,9 @@ const mapDispatchToProps = dispatch => {
         editPage: (editingPageId, data) => {
             dispatch(editPageAction(editingPageId, data));
         },
-        deletePage: () => (null)
+        deletePage: (pageId, notebookId) => {
+            dispatch(deletePageAction(pageId, notebookId));
+        }
     }
 };
 
