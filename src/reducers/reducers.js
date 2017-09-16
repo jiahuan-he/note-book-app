@@ -124,6 +124,20 @@ export const pages = (state= {}, action) => {
 
             return nextState;
 
+        case ACTION.PAGE_EDIT_SUCCESS:
+            const newState = {};
+            const {title, ...rest} = action.payload.data;
+            Object.keys(state).forEach((key)=>{
+                if (key === action.payload.data.pageId){
+
+                    newState[key] = {...state[key], title};
+                }
+                else{
+                    newState[key] = state[key];
+                }
+            });
+            return newState;
+
         default:
             return state;
     }

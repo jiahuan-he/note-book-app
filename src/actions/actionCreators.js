@@ -112,6 +112,8 @@ export const asyncSaveNoteAction = (note, currentPageId) => {
 };
 
 
+
+
 export const selectNotebookAction = (id)=> {
     return {
         type: ACTION.NOTEBOOK_SELECT,
@@ -155,6 +157,39 @@ export const editNotebookAction = (editingNotebookId, data)=> {
             })
     }
 };
+
+
+export const editPageAction = (editingPageId, data)=> {
+    // return {
+    //     type: ACTION.NOTEBOOK_EDIT,
+    //     payload: {notebookId: editingNotebookId, data: data},
+    // }
+
+    return (dispatch) => {
+        dispatch({type: ACTION.PAGE_EDIT_START});
+        axios.put("http://localhost:3001/pages",
+            {
+                uid: getCurrentUser().uid,
+                pageId: editingPageId,
+                title: data.title
+            }
+        )
+            .then( (response) => {
+                dispatch({
+                    type: ACTION.PAGE_EDIT_SUCCESS,
+                    payload: response
+                })
+            })
+            .catch( (error) => {
+                dispatch({
+                    type: ACTION.PAGE_EDIT_ERROR,
+                    payload: error
+                })
+            })
+    }
+};
+
+
 
 export const selectPageAction = (pageId) => {
     return {

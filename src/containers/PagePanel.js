@@ -4,7 +4,7 @@ import { Grid, List,Button, Modal, Input, Header} from 'semantic-ui-react'
 import {ButtonTop} from './PanelComponents'
 import {TYPE_ITEM} from '../util/constants';
 import { connect } from 'react-redux'
-import {selectPageAction , asyncAddPageAction, fetchPagesAction} from '../actions/actionCreators';
+import {selectPageAction , asyncAddPageAction, fetchPagesAction, editPageAction} from '../actions/actionCreators';
 import PropTypes from 'prop-types';
 import {getCurrentUser} from "../util/fb";
 import {ACTION} from "../util/constants";
@@ -127,7 +127,9 @@ const mapDispatchToProps = dispatch => {
         fetchPagesFromServer: (uid)=> {
             dispatch(fetchPagesAction(uid));
         },
-
+        editPage: (editingPageId, data) => {
+            dispatch(editPageAction(editingPageId, data));
+        },
         deletePage: () => (null)
     }
 };
