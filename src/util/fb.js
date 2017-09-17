@@ -25,7 +25,7 @@ export const login = (email, password, onError) => {
 
 export const onLoginStateChange = ( onChange )=> {
 
-    firebase.auth().onAuthStateChanged(
+    return firebase.auth().onAuthStateChanged(
         (user)=> onChange(user)
     );
 };
@@ -39,8 +39,6 @@ export const logout = ( then, onError ) => {
 export const getCurrentUser = () => {
     return firebase.auth().currentUser;
 };
-
-export default firebase;
 
 
 

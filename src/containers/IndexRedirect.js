@@ -1,5 +1,5 @@
 import React from 'react';
-import firebase from '../util/fb';
+import {onLoginStateChange} from '../util/fb';
 import {connect} from "react-redux";
 import {ACTION} from "../util/constants";
 import {Redirect} from "react-router-dom";
@@ -7,7 +7,7 @@ import {Redirect} from "react-router-dom";
 class IndexRedirect extends React.Component{
 
     componentDidMount(){
-        this.unsubscrib = firebase.auth().onAuthStateChanged( (user) => {
+        this.unsubscrib = onLoginStateChange( (user) => {
             if (user) {
                 this.props.dispatch({ type: ACTION.DETECT_LOGGED_IN, payload: {user: user}})
             }

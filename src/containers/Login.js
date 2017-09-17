@@ -3,7 +3,7 @@ import { Button, Form, Segment, Input} from 'semantic-ui-react';
 import {Redirect} from 'react-router-dom';
 import { connect } from 'react-redux';
 import { loginAction, signUpAction, detectLoggedInAction} from '../actions/actionCreators';
-import firebase from '../util/fb';
+import {onLoginStateChange} from '../util/fb';
 import {ACTION} from '../util/constants';
 
 
@@ -28,7 +28,8 @@ class Login extends React.Component {
     }
 
     componentDidMount(){
-        this.unsubscrib = firebase.auth().onAuthStateChanged( (user) => {
+
+        this.unsubscrib = onLoginStateChange( (user) => {
             if (user) {
                 this.props.onDetectLoggedIn(user);
             }

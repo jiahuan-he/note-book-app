@@ -7,13 +7,12 @@ import PagePanel from './PagePanel';
 import EditorPanel from './EditorPanel';
 import {connect} from 'react-redux';
 import {Redirect} from 'react-router-dom';
-import firebase  from '../util/fb';
-import {ACTION} from '../util/constants';
+import {onLoginStateChange}  from '../util/fb';
 
 class App extends React.Component{
 
     componentDidMount(){
-        this.unsubscrib = firebase.auth().onAuthStateChanged( (user) => {
+        this.unsubscrib = onLoginStateChange( (user) => {
             if (!user) {
                 this.props.onDetectLoggedOut();
             }
