@@ -14,9 +14,9 @@ export const notebooks = (state = {}, action) => {
             });
             return fetchedNotebooks;
 
-        case ACTION.NOTEBOOK_DELETE:
+        case ACTION.NOTEBOOK_DELETE_SUCCESS:
 
-            const currentNotebookKeys =  Object.keys(state).filter( (key)=> key!== action.payload.notebookId);
+            const currentNotebookKeys =  Object.keys(state).filter( (key)=> key!== action.payload.data.notebookId);
             const currentNotebooks = {};
             currentNotebookKeys.forEach( (key) => currentNotebooks[key] = state[key]);
             return currentNotebooks;
@@ -133,8 +133,8 @@ export const pages = (state= {}, action) => {
             });
             return fetchedPages;
 
-        case ACTION.NOTEBOOK_DELETE:
-            const notebookId = action.payload.notebookId;
+        case ACTION.NOTEBOOK_DELETE_SUCCESS:
+            const notebookId = action.payload.data.notebookId;
             let newKeys =[];
             Object.values(state).forEach( (page) => {
                 if(page.notebookId !== notebookId){
@@ -170,8 +170,8 @@ export const currentNotebookId = (state = "0" , action)=>{
     switch (action.type){
         case ACTION.NOTEBOOK_SELECT:
             return action.payload.notebookId;
-        case ACTION.NOTEBOOK_DELETE:
-            if (state === action.payload.notebookId){
+        case ACTION.NOTEBOOK_DELETE_SUCCESS:
+            if (state === action.payload.data.notebookId){
                 return null;
             }
             return state;

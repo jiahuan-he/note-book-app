@@ -15,6 +15,7 @@ import axios from 'axios';
 //     }
 // };
 
+
 export const asyncAddNotebookAction = (title) => {
     return (dispatch) => {
         dispatch({
@@ -121,11 +122,25 @@ export const selectNotebookAction = (id)=> {
     }
 };
 
-export const deleteNotebookAction = (id)=> {
-    return {
-        type: ACTION.NOTEBOOK_DELETE,
-        payload: {notebookId: id},
-    }
+export const deleteNotebookAction = (notebookId)=> {
+    const uid = getCurrentUser().uid;
+    return (dispatch) => {
+        dispatch({type: ACTION.NOTEBOOK_DELETE_START});
+        axios.delete(`http://localhost:3001/notebooks?uid=${uid}&notebookId=${notebookId}`)
+            .then((response) => {
+                dispatch({type: ACTION.NOTEBOOK_DELETE_SUCCESS, payload: response});
+            })
+            .catch ( (error) => {
+                dispatch( {type: ACTION.NOTEBOOK_DELETE_ERROR, palyload: error});
+            })
+    };
+
+
+    //
+    // return {
+    //     type: ACTION.NOTEBOOK_DELETE,
+    //     payload: {notebookId: id},
+    // }
 };
 
 export const deletePageAction = (pageId, notebookId) => {
@@ -387,3 +402,4 @@ export const fetchNotesFromServer = (uid) => {
             )
     }
 };
+
