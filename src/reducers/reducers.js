@@ -246,9 +246,6 @@ export const currentUser = ( state = null, action) => {
         case ACTION.LOGIN_ERROR:
             return null;
 
-        case ACTION.LOGIN_SUCCESS:
-            return action.payload.user;
-
         case ACTION.LOGOUT_SUCCESS:
             return null;
         case ACTION.DETECT_LOGGED_IN:
@@ -262,3 +259,18 @@ export const currentUser = ( state = null, action) => {
 
 };
 
+export const authError = ( state = null, action) => {
+    switch (action.type){
+        case ACTION.SIGNUP_START:
+            return null;
+        case ACTION.LOGIN_START:
+            return null;
+        case ACTION.LOGIN_ERROR:
+            return action.payload.error;
+        case ACTION.SIGNUP_ERROR:
+            return action.payload.error;
+
+        default:
+            return state;
+    }
+};

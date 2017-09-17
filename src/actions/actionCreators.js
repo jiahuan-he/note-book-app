@@ -246,7 +246,7 @@ export const loginAction = (email, password) => {
 
         login( email, password, (error) => dispatch({
             type: ACTION.LOGIN_ERROR,
-            payload: {error: error}
+            payload: {error: error.message}
         }));
 
         // onLoginStateChange( ( user )=> {
@@ -276,7 +276,7 @@ export const signUpAction = (email, password, name) => {
 
         signUp( email, password, name, (error) => dispatch({
             type: ACTION.SIGNUP_ERROR,
-            payload: {error: error}
+            payload: {error: error.message}
         }));
 
 

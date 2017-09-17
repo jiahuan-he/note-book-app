@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Form, Segment, Input} from 'semantic-ui-react';
+import { Button, Form, Segment, Input, Message} from 'semantic-ui-react';
 import {Redirect} from 'react-router-dom';
 import { connect } from 'react-redux';
 import { loginAction, signUpAction, detectLoggedInAction} from '../actions/actionCreators';
@@ -52,6 +52,7 @@ class Login extends React.Component {
         }
 
         return (
+            <div>
             <Form style={loginStyle}>
             <Segment.Group >
                 {this.state.onSignup &&
@@ -74,7 +75,6 @@ class Login extends React.Component {
                             icon='mail'
                             iconPosition='left'
                             placeholder='Email'
-                            value = {this.state.email}
                         />
                     </Form.Field>
                 </Segment>
@@ -86,7 +86,6 @@ class Login extends React.Component {
                             iconPosition='left'
                             placeholder='Password'
                             type = "password"
-                            value = {this.state.password}
                         />
                     </Form.Field>
                 </Segment>
@@ -105,14 +104,21 @@ class Login extends React.Component {
                     {/*<Button onClick={() => this.props.signUp(this.state.email, this.state.password)}*/}
                             {/*type='submit'>Signup*/}
                     {/*</Button>*/}
-
-
                     <Button onClick={() => this.setState({onSignup: true})}
                             type='submit'>Signup
                     </Button>
                 </Segment>
             </Segment.Group>
-        </Form>)
+        </Form>
+                {this.props.error
+                &&
+                <Message negative>
+                    <Message.Header>Error</Message.Header>
+                    <p>{this.props.error}</p>
+                </Message>}
+
+            </div>
+        )
     }
 }
 
@@ -134,6 +140,7 @@ const mapDispatchToProps = dispatch => {
 const mapStateToProps = (state) => {
     return {
         currentUser : state.currentUser,
+        error: state.authError
     }
 };
 
