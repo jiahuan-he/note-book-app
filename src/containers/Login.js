@@ -4,7 +4,6 @@ import {Redirect} from 'react-router-dom';
 import { connect } from 'react-redux';
 import { loginAction, signUpAction, detectLoggedInAction} from '../actions/actionCreators';
 import {onLoginStateChange} from '../util/fb';
-import {ACTION} from '../util/constants';
 
 
 const loginStyle = {
@@ -23,7 +22,9 @@ class Login extends React.Component {
             {
                 redirectToReferrer: shouldRedirect,
                 email: '',
-                password: '123456',
+                password: '',
+                onSignup: false,
+                name: ''
             };
     }
 
@@ -53,13 +54,28 @@ class Login extends React.Component {
         return (
             <Form style={loginStyle}>
             <Segment.Group >
+                {this.state.onSignup &&
+                    <Segment>
+                        <Form.Field>
+                            <Input
+                                onChange={ (e) => this.setState({name: e.target.value}) }
+                                icon='user'
+                                iconPosition='left'
+                                placeholder='Name'
+                                value = {this.state.name}
+                            />
+                        </Form.Field>
+                    </Segment>
+                }
                 <Segment>
                     <Form.Field>
                         <Input
                             onChange = { (e) => this.setState({email: e.target.value})}
                             icon='mail'
                             iconPosition='left'
-                            placeholder='Email' />
+                            placeholder='Email'
+                            value = {this.state.email}
+                        />
                     </Form.Field>
                 </Segment>
                 <Segment>
@@ -70,14 +86,28 @@ class Login extends React.Component {
                             iconPosition='left'
                             placeholder='Password'
                             type = "password"
+                            value = {this.state.password}
                         />
                     </Form.Field>
                 </Segment>
                 <Segment>
-                    <Button onClick={() => this.props.login(this.state.email, this.state.password)}
-                            type='submit'>Login
-                    </Button>
-                    <Button onClick={() => this.props.signUp(this.state.email, this.state.password)}
+                    {this.state.onSignup?
+                        <Button
+                            primary
+                            onClick={() => this.props.signUp(this.state.email, this.state.password, this.state.name)}
+                            type='submit'>Done
+                        </Button>
+                        :
+                        <Button onClick={() => this.props.login(this.state.email, this.state.password)}
+                                type='submit'>Login
+                        </Button>
+                    }
+                    {/*<Button onClick={() => this.props.signUp(this.state.email, this.state.password)}*/}
+                            {/*type='submit'>Signup*/}
+                    {/*</Button>*/}
+
+
+                    <Button onClick={() => this.setState({onSignup: true})}
                             type='submit'>Signup
                     </Button>
                 </Segment>
@@ -95,8 +125,8 @@ const mapDispatchToProps = dispatch => {
         login: (email, password) => {
             dispatch(loginAction(email, password));
         },
-        signUp: (email, password) => {
-            dispatch(signUpAction(email, password));
+        signUp: (email, password, name) => {
+            dispatch(signUpAction(email, password, name));
         }
     }
 };

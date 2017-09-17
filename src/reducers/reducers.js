@@ -69,7 +69,6 @@ export const notebooks = (state = {}, action) => {
                 newStateOnDelete[notebookId] = { ...state[notebookId], ...{pages: newPages}}
                 return newStateOnDelete;
             }
-        break;
 
         case ACTION.NOTEBOOK_ADD_START:
             return state;

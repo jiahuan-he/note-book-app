@@ -265,18 +265,21 @@ export const loginAction = (email, password) => {
 };
 
 
-export const signUpAction = (email, password) => {
+export const signUpAction = (email, password, name) => {
 
     return (dispatch) => {
         dispatch({
-                type: ACTION.SIGNUP_START
+                type: ACTION.SIGNUP_START,
+                payload: {email, password}
             }
         );
 
-        signUp( email, password, (error) => dispatch({
+        signUp( email, password, name, (error) => dispatch({
             type: ACTION.SIGNUP_ERROR,
             payload: {error: error}
         }));
+
+
 
         // onLoginStateChange( ( user )=> {
         //     if (user){

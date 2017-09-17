@@ -10,10 +10,25 @@ const config = {
 
 firebase.initializeApp(config);
 
-export const signUp = (email, password, onError)=> {
+export const signUp = (email, password, name, onError)=> {
+    console.log(email, password);
     firebase.auth().createUserWithEmailAndPassword(email, password).catch(
-        (error)=> onError(error)
+        (error)=> {
+            console.log("catch called");
+            onError(error)
+        }
     );
+    onLoginStateChange( (user) => {
+       if (user){
+           user.updateProfile({
+               displayName: name,
+           }).then(()=> {
+
+           }).catch(()=> {
+
+           });
+       }
+    });
 };
 
 export const login = (email, password, onError) => {
