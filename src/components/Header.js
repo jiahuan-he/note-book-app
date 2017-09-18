@@ -14,13 +14,13 @@ class Header extends React.Component{
         return (
             <Menu inverted fixed='top' size='large'>
                 <Container>
-                    <Menu.Item as='a' active>Home</Menu.Item>
-                    <Menu.Item as='a'>Work</Menu.Item>
-                    <Menu.Item as='a'>Careers</Menu.Item>
+                    {/*<Menu.Item as='a' active>Home</Menu.Item>*/}
+                    {/*<Menu.Item as='a'>Work</Menu.Item>*/}
+                    {/*<Menu.Item as='a'>Careers</Menu.Item>*/}
                     <Menu.Menu position='right'>
-                        <Menu.Item className='item'>
-                            <Button inverted as='a'>Log in</Button>
-                        </Menu.Item>
+                        {/*<Menu.Item className='item'>*/}
+                            {/*<Button inverted as='a'>Log in</Button>*/}
+                        {/*</Menu.Item>*/}
                         <Menu.Item>
                             <Button onClick={
                                 this.props.logout

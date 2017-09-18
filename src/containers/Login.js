@@ -7,16 +7,19 @@ import {onLoginStateChange} from '../util/fb';
 
 
 const loginStyle = {
-    width:'50%',
     margin: 'auto',
-    marginTop: '200px'
+    paddingTop : '200px'
+};
+
+const containerStyle = {
+    width: "500px",
+    margin: 'auto'
 };
 
 class Login extends React.Component {
 
     constructor(props){
         super(props);
-        console.log(" CONSTRUCTOR LOGIN");
         let shouldRedirect = false;
         this.state =
             {
@@ -52,7 +55,7 @@ class Login extends React.Component {
         }
 
         return (
-            <div>
+            <div style={containerStyle}>
             <Form style={loginStyle}>
             <Segment.Group >
                 {this.state.onSignup &&

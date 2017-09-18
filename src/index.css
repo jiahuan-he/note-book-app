@@ -11,6 +11,8 @@ body{
     padding: 0;
 }
 
-.panel-header-button {
+#root .panel-header-button {
     width: 100%;
+    border-radius: 0;
 }
+
