@@ -1,0 +1,35 @@
+#notebook-list li{
+    border-bottom: solid 1px #2185d0;
+    padding: 0.6em ;
+}
+
+#notebook-list li:first-child{
+    border-top: solid 1px #2185d0;
+}
+
+#notebook-list .selected{
+    border-right: solid 0.6em #2185d0;
+}
+
+#notebook-list {
+    padding: 0;
+}
+
+#notebook-panel {
+    padding-left: 1.5em;
+}
+
+
+#notebook-panel .page-count{
+    position: absolute;
+    right: 1.8em;
+}
+
+
+#notebook-panel .delete-button{
+    /*float: right;*/
+}
+
+#notebook-panel .notebook-detail{
+    color: #2185d0;
+}

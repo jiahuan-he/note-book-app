@@ -69,7 +69,7 @@ class PagePanel extends React.Component{
             const id = page.pageId;
             const notebookId = page.notebookId;
             const title = page.title;
-            const createDate = page.createDate;
+            const createDate = page.createDate.slice(0, 10);
 
 
             return (<PageItem key={id}

@@ -16,3 +16,14 @@ body{
     border-radius: 0;
 }
 
+#root .notebook-item{
+    border-radius: 0;
+}
+
+#root ul{
+    list-style-type: none;
+}
+
+#root {
+box-sizing: border-box;
+}

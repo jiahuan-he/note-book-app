@@ -16,6 +16,7 @@ export const currentDateToString= ()=> {
 
 // temp
 export const formatDate = (date) => {
+
     return date;
 };
 

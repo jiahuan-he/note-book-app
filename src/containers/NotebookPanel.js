@@ -14,7 +14,7 @@ import {
 import {ACTION} from "../util/constants";
 import PropTypes from 'prop-types';
 import {getCurrentUser} from '../util/fb';
-
+import "../styles/notebook.css";
 
 class NotebookPanel extends React.Component{
 
@@ -80,9 +80,12 @@ class NotebookPanel extends React.Component{
         const notebooks = Object.values(this.props.notebooks).map( (notebook)=>{
             const id = notebook.notebookId;
             const title = notebook.title;
-            const createDate = notebook.createDate;
+            const createDate = notebook.createDate.slice(0, 10);
+            const selected = id === this.props.currentNotebookId;
+
             return (<NotebookItem
                 onClick = {()=> this.handleNotebookItemClick(id)}
+                selected = {selected}
                 onDeleteButtonClicked = {() => this.props.deleteNotebook(id)}
                 onEditButtonClicked = {() => this.openEditModal(notebook)}
                 key={id}
@@ -95,7 +98,7 @@ class NotebookPanel extends React.Component{
         );
 
         return (
-            <Grid.Column width={this.props.width}>
+            <Grid.Column id="notebook-panel" width={this.props.width}>
                 <ButtonTop  type={itemType} onClick={this.openModal} />
                 <Modal open={this.state.modalOpen}>
                     <Modal.Header>{itemType} TITLE</Modal.Header>
@@ -114,9 +117,9 @@ class NotebookPanel extends React.Component{
                         </Modal.Description>
                     </Modal.Content>
                 </Modal>
-                <List.List >
+                <ul id="notebook-list">
                     {notebooks}
-                </List.List>
+                </ul>
             </Grid.Column>
         );
     }
