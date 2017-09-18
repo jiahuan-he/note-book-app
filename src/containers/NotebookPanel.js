@@ -2,7 +2,7 @@ import React from 'react';
 import NotebookItem from '../components/NotebookItem'
 
 import { Grid, List,Button, Modal, Input} from 'semantic-ui-react'
-import {ButtonTop} from './PanelComponents'
+import {ButtonTop} from '../components/PanelComponents'
 import {TYPE_ITEM} from '../util/constants';
 import { connect } from 'react-redux'
 import {
@@ -117,7 +117,7 @@ class NotebookPanel extends React.Component{
                         </Modal.Description>
                     </Modal.Content>
                 </Modal>
-                <ul id="notebook-list">
+                <ul className="item-list notebook-list">
                     {notebooks}
                 </ul>
             </Grid.Column>

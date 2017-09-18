@@ -32,14 +32,10 @@ export const ButtonTop = ({type, onClick, disabled}) =>{
                 ADD {type}
             </Button.Content>
     </Button>);
-}
-
-export const ReadOnlyButton = () => {
-    return <Button secondary>Read Only</Button>
 };
 
 export const SaveEditorButton = ({onClick}) => {
-    return <Button
+    return <Button className="save-button"
         onClick={onClick}
         positive>Save</Button>
 };

@@ -16,7 +16,7 @@ class EditorPanel extends React.Component{
 
     render(){
         return (
-            <Grid.Column width={this.props.width}>
+            <Grid.Column id="editor-panel" width={this.props.width}>
                 {
                     this.props.currentPageId
                     && this.props.currentPageId!== '0'

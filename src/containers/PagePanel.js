@@ -1,7 +1,7 @@
 import React from 'react';
 import PageItem from '../components/PageItem'
 import { Grid, List,Button, Modal, Input, Header} from 'semantic-ui-react'
-import {ButtonTop} from './PanelComponents'
+import {ButtonTop} from '../components/PanelComponents'
 import {TYPE_ITEM} from '../util/constants';
 import { connect } from 'react-redux'
 import {selectPageAction , asyncAddPageAction, fetchPagesAction, editPageAction, deletePageAction} from '../actions/actionCreators';
@@ -70,23 +70,26 @@ class PagePanel extends React.Component{
             const notebookId = page.notebookId;
             const title = page.title;
             const createDate = page.createDate.slice(0, 10);
+            const selected = id === this.props.currentPageId;
 
+            return (<PageItem
 
-            return (<PageItem key={id}
-                       title= {title}
-                       createDate= {createDate}
-                       onClick = {() => this.props.selectPage(id)}
-                       onDeleteButtonClicked = {() => this.props.deletePage(id, notebookId)}
-                       onEditButtonClicked = {() => this.openEditModal(page)}
+                    selected = {selected}
+                    key={id}
+                    title= {title}
+                    createDate= {createDate}
+                    onClick = {() => this.props.selectPage(id)}
+                    onDeleteButtonClicked = {() => this.props.deletePage(id, notebookId)}
+                    onEditButtonClicked = {() => this.openEditModal(page)}
             />)
         });
 
         return (
-            <Grid.Column width={this.props.width}>
+            <Grid.Column id="page-panel" width={this.props.width}>
                 <ButtonTop disabled={!this.props.currentNotebookId || this.props.currentNotebookId ==='0'} type={type} onClick={this.openModal} />
-                {this.props.currentNotebook &&
-                    <Header size='large'>{this.props.currentNotebook.title}</Header>
-                }
+                {/*{this.props.currentNotebook &&*/}
+                    {/*<Header size='large'>{this.props.currentNotebook.title}</Header>*/}
+                {/*}*/}
                 <Modal open={this.state.modalOpen}>
                     <Modal.Header>{type} TITLE</Modal.Header>
                     <Modal.Content >
@@ -102,9 +105,9 @@ class PagePanel extends React.Component{
                         </Modal.Description>
                     </Modal.Content>
                 </Modal>
-                <List.List >
+                <ul className="item-list page-list">
                     {pages}
-                </List.List>
+                </ul>
             </Grid.Column>
         );
     }
@@ -158,6 +161,7 @@ const mapStateToProps = ( state ) => {
         pages: getCurrentPages(state.currentNotebookId, state.notebooks, state.pages),
         currentNotebook: getCurrentNotebook(state.currentNotebookId, state.notebooks),
         currentNotebookId: state.currentNotebookId,
+        currentPageId: state.currentPageId
     };
 };
 

@@ -36,7 +36,7 @@ const NotebookItem = ({title, createDate, onClick, onDeleteButtonClicked, onEdit
                             </h3>
                         </div>
                         <div className="notebook-detail">
-                            <span className="create-date">
+                            <span>
                                 {formatDate(createDate)}
                             </span>
                             <span className="page-count">

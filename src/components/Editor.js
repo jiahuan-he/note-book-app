@@ -2,7 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux'
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import {SaveEditorButton, ReadOnlyButton} from '../containers/PanelComponents';
+import {SaveEditorButton} from './PanelComponents';
+import "../styles/editor.css";
 
 class Editor extends React.Component {
     constructor(props) {
@@ -43,12 +44,12 @@ class Editor extends React.Component {
         this.props.saveNote(this.quillRef.getContents(), this.props.currentPageId);
     };
 
+
     render() {
 
         return (
+    <div>
             <div>
-                <ReadOnlyButton/>
-                <SaveEditorButton onClick = {this.handleSave}/>
                 <ReactQuill
                     style = { {height: '500px'}}
                     value={ this.state.text }
@@ -68,8 +69,11 @@ class Editor extends React.Component {
                         'link', 'image'
                     ]}
                     onChange={this.handleChange}
+                    readOnly = {this.state.readOnly}
                 />
             </div>
+            <SaveEditorButton onClick = {this.handleSave}/>
+        </div>
         )
     }
 }
@@ -91,9 +95,6 @@ const getCurrentDelta = (currentPageId, notes, pages)=> {
             delta = notes[key].note;
         }
     });
-
-
-
     return delta;
 };
 
