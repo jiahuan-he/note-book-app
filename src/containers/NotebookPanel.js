@@ -82,11 +82,11 @@ class NotebookPanel extends React.Component{
             const title = notebook.title;
             const createDate = notebook.createDate.slice(0, 10);
             const selected = id === this.props.currentNotebookId;
-
+            const beingDeleted = this.props.deleteStatus.includes(id);
             return (<NotebookItem
                 onClick = {()=> this.handleNotebookItemClick(id)}
                 selected = {selected}
-                onDeleteButtonClicked = {() => this.props.deleteNotebook(id)}
+                onDeleteButtonClicked = { beingDeleted ? ()=> null : () => this.props.deleteNotebook(id)}
                 onEditButtonClicked = {() => this.openEditModal(notebook)}
                 key={id}
                 title= {title}
@@ -156,6 +156,7 @@ const mapStateToProps = ( state ) => {
         notebooks: state.notebooks,
         //TODO change current notebook's appearance
         currentNotebookId: state.currentNotebookId,
+        deleteStatus: state.notebookDeleteStatus,
     };
 };
 

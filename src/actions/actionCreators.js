@@ -19,7 +19,7 @@ import axios from 'axios';
 export const asyncAddNotebookAction = (title) => {
     return (dispatch) => {
         dispatch({
-            type: ACTION.NOTEBOOK_ADD_START
+            type: ACTION.NOTEBOOK_ADD_START,
         });
 
         axios.post('http://localhost:3001/notebooks', {
@@ -125,7 +125,7 @@ export const selectNotebookAction = (id)=> {
 export const deleteNotebookAction = (notebookId)=> {
     const uid = getCurrentUser().uid;
     return (dispatch) => {
-        dispatch({type: ACTION.NOTEBOOK_DELETE_START});
+        dispatch({type: ACTION.NOTEBOOK_DELETE_START, payload: notebookId});
         axios.delete(`http://localhost:3001/notebooks?uid=${uid}&notebookId=${notebookId}`)
             .then((response) => {
                 dispatch({type: ACTION.NOTEBOOK_DELETE_SUCCESS, payload: response});

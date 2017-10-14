@@ -264,7 +264,6 @@ export const currentUser = ( state = null, action) => {
         default:
             return state;
     }
-
 };
 
 export const authError = ( state = null, action) => {
@@ -278,6 +277,17 @@ export const authError = ( state = null, action) => {
         case ACTION.SIGNUP_ERROR:
             return action.payload.error;
 
+        default:
+            return state;
+    }
+};
+
+export const notebookDeleteStatus = ( state = [], action) => {
+    switch (action.type){
+        case ACTION.NOTEBOOK_DELETE_START:
+            return [...state, action.payload];
+        case ACTION.NOTEBOOK_DELETE_SUCCESS:
+            return state.filter( id => id !== action.payload.data.notebookId);
         default:
             return state;
     }
