@@ -63,11 +63,19 @@ export const notebooks = (state = {}, action) => {
         case ACTION.PAGE_DELETE_SUCCESS:
             {
                 const {pageId, notebookId} = action.payload.data;
-                const newStateOnDelete = state;
-                const oldPages = state[notebookId].pages;
-                const newPages = oldPages.filter( (page) => page !== pageId);
-                newStateOnDelete[notebookId] = { ...state[notebookId], ...{pages: newPages}}
-                return newStateOnDelete;
+                const newState = {};
+                Object.keys(state).forEach( key => {
+                    newState[key] = state[key];
+                    if (key === notebookId){
+                        newState[key].pages = state[key].pages.filter( (pageId) => pageId !== pageId)
+                    }
+                });
+                //Debugged: should return a new state instead of modifying the old one!!!
+                // const newStateOnDelete = state;
+                // const oldPages = state[notebookId].pages;
+                // const newPages = oldPages.filter( (page) => page !== pageId);
+                // newStateOnDelete[notebookId] = { ...state[notebookId], ...{pages: newPages}}
+                return newState;
             }
 
         case ACTION.NOTEBOOK_ADD_START:

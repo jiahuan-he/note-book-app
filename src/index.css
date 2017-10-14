@@ -38,5 +38,11 @@ body{
 }
 
 #root {
-box-sizing: border-box;
+    box-sizing: border-box;
+    height: 100%;
 }
+
+#root:first-child{
+    height:100%;
+}
+
