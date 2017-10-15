@@ -3,26 +3,15 @@ import {currentDateToString} from '../util/util';
 import {logout, login, signUp, getCurrentUser} from '../util/fb';
 import axios from 'axios';
 
-// export const addNotebookAction = (title)=>{
-//     return {
-//         type: ACTION.NOTEBOOK_ADD,
-//         payload:
-//             {
-//                 title: title,
-//                 createDate : new Date(),
-//                 notebookId: currentDateToString(),
-//             }
-//     }
-// };
-
-
+const URL = "http://notebookapp-env.rb52bmgtw2.ca-central-1.elasticbeanstalk.com/";
+const localURL = "http://localhost:3001/";
 export const asyncAddNotebookAction = (title) => {
     return (dispatch) => {
         dispatch({
             type: ACTION.NOTEBOOK_ADD_START,
         });
 
-        axios.post('http://localhost:3001/notebooks', {
+        axios.post(URL+'notebooks', {
                 uid: getCurrentUser().uid,
                 title: title,
                 createDate : new Date(),
@@ -63,7 +52,7 @@ export const asyncAddPageAction = (currentNotebookId, title) => {
             type: ACTION.PAGE_ADD_START
         });
 
-        axios.post('http://localhost:3001/pages', {
+        axios.post(URL+'pages', {
                 uid: getCurrentUser().uid,
                 title: title,
                 createDate : new Date(),
@@ -92,7 +81,7 @@ export const asyncSaveNoteAction = (note, currentPageId) => {
             type: ACTION.NOTE_SAVE_START,
         });
 
-        axios.post('http://localhost:3001/notes', {
+        axios.post(URL+'notes', {
             uid: getCurrentUser().uid,
             targetPageId: currentPageId,
             note: note
@@ -126,7 +115,7 @@ export const deleteNotebookAction = (notebookId)=> {
     const uid = getCurrentUser().uid;
     return (dispatch) => {
         dispatch({type: ACTION.NOTEBOOK_DELETE_START, payload: notebookId});
-        axios.delete(`http://localhost:3001/notebooks?uid=${uid}&notebookId=${notebookId}`)
+        axios.delete(`${URL}notebooks?uid=${uid}&notebookId=${notebookId}`)
             .then((response) => {
                 dispatch({type: ACTION.NOTEBOOK_DELETE_SUCCESS, payload: response});
             })
@@ -147,7 +136,7 @@ export const deletePageAction = (pageId, notebookId) => {
     const uid =  getCurrentUser().uid;
     return (dispatch)=> {
         dispatch({type: ACTION.PAGE_DELETE_START});
-        axios.delete(`http://localhost:3001/pages?uid=${uid}&pageId=${pageId}&notebookId=${notebookId}`)
+        axios.delete(`${URL}pages?uid=${uid}&pageId=${pageId}&notebookId=${notebookId}`)
             .then((response) => {
                 dispatch({type: ACTION.PAGE_DELETE_SUCCESS, payload: response});
             })
@@ -165,7 +154,7 @@ export const editNotebookAction = (editingNotebookId, data)=> {
 
     return (dispatch) => {
         dispatch({type: ACTION.NOTEBOOK_EDIT_START});
-        axios.put("http://localhost:3001/notebooks",
+        axios.put(URL+"notebooks",
             {
                 uid: getCurrentUser().uid,
                 notebookId: editingNotebookId,
@@ -196,7 +185,7 @@ export const editPageAction = (editingPageId, data)=> {
 
     return (dispatch) => {
         dispatch({type: ACTION.PAGE_EDIT_START});
-        axios.put("http://localhost:3001/pages",
+        axios.put(`${URL}pages`,
             {
                 uid: getCurrentUser().uid,
                 pageId: editingPageId,
@@ -339,7 +328,7 @@ export const detectLoggedOutAction = () => {
 export const fetchNotebooksAction = (uid) => {
     return (dispatch) => {
         dispatch({type: ACTION.FETCH_NOTEBOOKS_START});
-        axios.get('http://localhost:3001/notebooks?uid='+uid)
+        axios.get(URL+'notebooks?uid='+uid)
             .then( (response)=>{
                 dispatch({
                     type:ACTION.FETCH_NOTEBOOKS_SUCCESS,
@@ -363,7 +352,7 @@ export const fetchNotebooksAction = (uid) => {
 export const fetchPagesAction = (uid) => {
     return (dispatch) => {
         dispatch({type: ACTION.FETCH_PAGES_START});
-        axios.get('http://localhost:3001/pages?uid='+uid)
+        axios.get(URL+'pages?uid='+uid)
             .then( (response)=>{
                 dispatch({
                     type:ACTION.FETCH_PAGES_SUCCESS,
@@ -386,7 +375,7 @@ export const fetchPagesAction = (uid) => {
 export const fetchNotesFromServer = (uid) => {
     return (dispatch) => {
         dispatch({type: ACTION.FETCH_NOTES_START});
-        axios.get('http://localhost:3001/notes?uid='+uid)
+        axios.get(URL+'notes?uid='+uid)
             .then( (response)=>{
                 dispatch({
                     type:ACTION.FETCH_NOTES_SUCCESS,
