@@ -9,11 +9,11 @@ class Index extends React.Component{
     render(){
 
         return(
-            <BrowserRouter>
+            <BrowserRouter basename={'/notebook'}>
                 <div>
-                    <Route exact path="/" component={ IndexRedirect } />
-                    <Route exact path="/login" component={ Login } />
-                    <Route exact path="/edit" component={ App } />
+                    <Route exact path={`${process.env.PUBLIC_URL}/`} component={ IndexRedirect } />
+                    <Route exact path={`${process.env.PUBLIC_URL}/login`} component={ Login } />
+                    <Route exact path={`${process.env.PUBLIC_URL}/edit`} component={ App } />
                 </div>
             </BrowserRouter>
         );
