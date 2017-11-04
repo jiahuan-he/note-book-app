@@ -3,8 +3,9 @@ import {currentDateToString} from '../util/util';
 import {logout, login, signUp, getCurrentUser} from '../util/fb';
 import axios from 'axios';
 
-const URL = "http://notebookapp-env.rb52bmgtw2.ca-central-1.elasticbeanstalk.com/";
-const localURL = "http://localhost:3001/";
+const URL = "https://notebook-server.herokuapp.com/";
+// const URL = "http://localhost:3000/";
+const localURL = "http://localhost:3000/";
 export const asyncAddNotebookAction = (title) => {
     return (dispatch) => {
         dispatch({
