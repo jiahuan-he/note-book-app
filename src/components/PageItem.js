@@ -37,7 +37,7 @@ const PageItem = ({title, createDate, onClick, onDeleteButtonClicked, onEditButt
                 </div>
             </div>
             <div>
-                <Button size='mini' onClick={onEditButtonClicked} basic color='green'>Edit</Button>
+                <Button size='mini' onClick={onEditButtonClicked} basic color='green'>Rename</Button>
                 <Button className="delete-button" size='mini' onClick={onDeleteButtonClicked} basic color='red'>Delete</Button>
             </div>
 

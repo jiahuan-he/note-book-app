@@ -123,7 +123,17 @@ class Login extends React.Component {
                     <Message.Header>Error</Message.Header>
                     <p>{this.props.error}</p>
                 </Message>}
-
+                <Message>
+                    <Message.Header>
+                        Hint
+                    </Message.Header>
+                    <p>
+                        emails: testuser1@gmail.com / testuser2@gmail.com
+                    </p>
+                    <p>
+                        password: 123456
+                    </p>
+                </Message>
             </div>
         )
     }

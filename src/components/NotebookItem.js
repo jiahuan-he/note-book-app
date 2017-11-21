@@ -45,7 +45,7 @@ const NotebookItem = ({title, createDate, onClick, onDeleteButtonClicked, onEdit
                         </div>
                     </div>
             <div>
-                <Button size='mini' onClick={onEditButtonClicked} basic color='blue'>Edit</Button>
+                <Button size='mini' onClick={onEditButtonClicked} basic color='blue'>Rename</Button>
                 <Button className="delete-button" size='mini' onClick={onDeleteButtonClicked} basic color='red'>Delete</Button>
             </div>
 
