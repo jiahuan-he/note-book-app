@@ -7,8 +7,9 @@ import thunk from 'redux-thunk';
 
 const reducer = combineReducers({notebookDeleteStatus, authError, currentUser, notes, currentPageId, currentNotebookId, notebooks, pages});
 const store = createStore( reducer,
-    compose(applyMiddleware(thunk, logger),
-        window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    compose(applyMiddleware(thunk, logger)
+        // The BELOW LINE SHOULD ONLY BE USED IN DEV MODE!!!
+        // ,window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
     ));
 
 export default store;
