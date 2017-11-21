@@ -67,7 +67,9 @@ export const notebooks = (state = {}, action) => {
                 Object.keys(state).forEach( key => {
                     newState[key] = state[key];
                     if (key === notebookId){
-                        newState[key].pages = state[key].pages.filter( (pageId) => pageId !== pageId)
+                        newState[key].pages = state[key].pages.filter( (id) => {
+                            return pageId !== id
+                        });
                     }
                 });
                 //Debugged: should return a new state instead of modifying the old one!!!
