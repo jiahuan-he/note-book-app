@@ -64,7 +64,7 @@ class Login extends React.Component {
                         <Segment>
                             <Form.Field>
                                 <Input
-                                    onChange={ (e) => this.setState({name: e.target.value}) }
+                                    onChange={ (e) => this.setState({name: e.target.value.trim()}) }
                                     icon='user'
                                     iconPosition='left'
                                     placeholder='Name'
@@ -76,7 +76,7 @@ class Login extends React.Component {
                         <Segment>
                             <Form.Field>
                                 <Input
-                                    onChange={ (e) => this.setState({email: e.target.value})}
+                                    onChange={ (e) => this.setState({email: e.target.value.trim()})}
                                     icon='mail'
                                     iconPosition='left'
                                     placeholder='Email'
@@ -86,7 +86,7 @@ class Login extends React.Component {
                         <Segment>
                             <Form.Field>
                                 <Input
-                                    onChange={ (e) => this.setState({password: e.target.value}) }
+                                    onChange={ (e) => this.setState({password: e.target.value.trim()}) }
                                     icon='lock'
                                     iconPosition='left'
                                     placeholder='Password'
