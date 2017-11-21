@@ -1,14 +1,14 @@
 import React from 'react';
-import { Button, Form, Segment, Input, Message} from 'semantic-ui-react';
+import {Button, Form, Segment, Input, Message, Header} from 'semantic-ui-react';
 import {Redirect} from 'react-router-dom';
-import { connect } from 'react-redux';
-import { loginAction, signUpAction, detectLoggedInAction} from '../actions/actionCreators';
+import {connect} from 'react-redux';
+import {loginAction, signUpAction, detectLoggedInAction} from '../actions/actionCreators';
 import {onLoginStateChange} from '../util/fb';
 
 
 const loginStyle = {
     margin: 'auto',
-    paddingTop : '200px'
+    paddingTop: '200px'
 };
 
 const containerStyle = {
@@ -18,7 +18,7 @@ const containerStyle = {
 
 class Login extends React.Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
         let shouldRedirect = false;
         this.state =
@@ -31,9 +31,9 @@ class Login extends React.Component {
             };
     }
 
-    componentDidMount(){
+    componentDidMount() {
 
-        this.unsubscrib = onLoginStateChange( (user) => {
+        this.unsubscrib = onLoginStateChange((user) => {
             if (user) {
                 this.props.onDetectLoggedIn(user);
             }
@@ -43,11 +43,11 @@ class Login extends React.Component {
         });
     }
 
-    componentWillUnmount () {
+    componentWillUnmount() {
         this.unsubscrib()
     }
 
-    render(){
+    render() {
         if (this.props.currentUser) {
             return (
                 <Redirect to="/edit"/>
@@ -56,63 +56,67 @@ class Login extends React.Component {
 
         return (
             <div style={containerStyle}>
-            <Form style={loginStyle}>
-            <Segment.Group >
-                {this.state.onSignup &&
-                    <Segment>
-                        <Form.Field>
-                            <Input
-                                onChange={ (e) => this.setState({name: e.target.value}) }
-                                icon='user'
-                                iconPosition='left'
-                                placeholder='Name'
-                                value = {this.state.name}
-                            />
-                        </Form.Field>
-                    </Segment>
-                }
-                <Segment>
-                    <Form.Field>
-                        <Input
-                            onChange = { (e) => this.setState({email: e.target.value})}
-                            icon='mail'
-                            iconPosition='left'
-                            placeholder='Email'
-                        />
-                    </Form.Field>
-                </Segment>
-                <Segment>
-                    <Form.Field>
-                        <Input
-                            onChange={ (e) => this.setState({password: e.target.value}) }
-                            icon='lock'
-                            iconPosition='left'
-                            placeholder='Password'
-                            type = "password"
-                        />
-                    </Form.Field>
-                </Segment>
-                <Segment>
-                    {this.state.onSignup?
-                        <Button
-                            primary
-                            onClick={() => this.props.signUp(this.state.email, this.state.password, this.state.name)}
-                            type='submit'>Done
-                        </Button>
-                        :
-                        <Button onClick={() => this.props.login(this.state.email, this.state.password)}
-                                type='submit'>Login
-                        </Button>
-                    }
-                    {/*<Button onClick={() => this.props.signUp(this.state.email, this.state.password)}*/}
+
+                <Form style={loginStyle}>
+                    <Header as='h1'>Notebook</Header>
+                    <Segment.Group >
+                        {this.state.onSignup &&
+                        <Segment>
+                            <Form.Field>
+                                <Input
+                                    onChange={ (e) => this.setState({name: e.target.value}) }
+                                    icon='user'
+                                    iconPosition='left'
+                                    placeholder='Name'
+                                    value={this.state.name}
+                                />
+                            </Form.Field>
+                        </Segment>
+                        }
+                        <Segment>
+                            <Form.Field>
+                                <Input
+                                    onChange={ (e) => this.setState({email: e.target.value})}
+                                    icon='mail'
+                                    iconPosition='left'
+                                    placeholder='Email'
+                                />
+                            </Form.Field>
+                        </Segment>
+                        <Segment>
+                            <Form.Field>
+                                <Input
+                                    onChange={ (e) => this.setState({password: e.target.value}) }
+                                    icon='lock'
+                                    iconPosition='left'
+                                    placeholder='Password'
+                                    type="password"
+                                />
+                            </Form.Field>
+                        </Segment>
+                        <Segment>
+                            {this.state.onSignup ?
+                                <Button
+                                    primary
+                                    onClick={() => this.props.signUp(this.state.email, this.state.password, this.state.name)}
+                                    type='submit'>Done
+                                </Button>
+                                :
+                                <Button onClick={() => this.props.login(this.state.email, this.state.password)}
+                                        type='submit'>Login
+                                </Button>
+                            }
+                            {/*<Button onClick={() => this.props.signUp(this.state.email, this.state.password)}*/}
                             {/*type='submit'>Signup*/}
-                    {/*</Button>*/}
-                    <Button onClick={() => this.setState({onSignup: true})}
-                            type='submit'>Signup
-                    </Button>
-                </Segment>
-            </Segment.Group>
-        </Form>
+                            {/*</Button>*/}
+                            <Button onClick={() => this.setState({onSignup: !this.state.onSignup})}
+                                    type='submit'>
+                                {
+                                    this.state.onSignup ? "Back To Login" : "Signup"}
+                            </Button>
+                        </Segment>
+                    </Segment.Group>
+                </Form>
                 {this.props.error
                 &&
                 <Message negative>
@@ -142,12 +146,10 @@ const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = (state) => {
     return {
-        currentUser : state.currentUser,
+        currentUser: state.currentUser,
         error: state.authError
     }
 };
-
-
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
